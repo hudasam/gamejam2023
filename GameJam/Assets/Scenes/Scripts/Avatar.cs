@@ -14,7 +14,9 @@ public class Avatar : Actor
     private readonly MultiControl<PlayerAction> m_availableAction = new();
     private Rigidbody2D m_rigidbody;
 
-    
+    public Vector2 NavigationInput;
+    public readonly Reactive<bool> JumpInput = new();
+
     protected void Awake()
     {
         m_rigidbody = GetComponent<Rigidbody2D>();

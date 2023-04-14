@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -53,4 +54,13 @@ public class Controller : MonoBehaviour
         }
     }
 
+
+    private void Update()
+    {
+        if(Avatar)
+        {
+            Avatar.NavigationInput = new Vector2(Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
+            Avatar.JumpInput.Value = Input.GetKey(KeyCode.Space);
+        }
+    }
 }
