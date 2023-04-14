@@ -29,7 +29,9 @@ public class Controller : MonoBehaviour
             {
                 m_avatar.AvailableAction.ValueChanged += OnAvatarActionChanged;
             }
+            
             OnAvatarActionChanged(m_avatar ? m_avatar.AvailableAction.Value : null);
+            m_cameraController.SetTarget(m_avatar ? m_avatar.transform : null);
         }
     }
     
@@ -40,7 +42,7 @@ public class Controller : MonoBehaviour
         Avatar = null;
         Avatar = avatar;
     }
-
+    
     private void OnAvatarActionChanged(PlayerAction obj)
     {
         if(obj != null)
