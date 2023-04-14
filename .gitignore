@@ -1,0 +1,58 @@
+*Assembly*
+*.orig
+*.pidb
+*.unityproj
+*.orig.meta
+gc.log
+
+Library/
+Temp/
+obj/
+.vs/
+*.diff
+Assets/BuildReport/BuildReportToolOptions.xml
+Assets/BuildReport/BuildReportToolOptions.xml.meta
+Assets/UMotionEditor/
+Assets/UMotionExamples/
+Assets/UMotionExamples.meta
+Assets/UMotionEditor.meta
+*.bak
+
+/*.csproj
+/*.sln
+Assets/Scripts/DLLs.meta
+Assets/Scripts/DLLs/
+Installer/Installer/Release/ChordataAntarctica.msi
+Installer/Installer/Release/
+MasterServer/MasterClient/bin/
+MasterServer/Framework/bin/
+MasterServer/StateMachineTest/bin/
+MasterServer/ClientCrashTest/bin/
+MasterServer/MasterServer/bin/
+MasterServer/MasterServerShaded/bin/
+MasterServer/ServerTest/bin/
+MasterServer/packages/
+Logs/ApiUpdaterCheck.txt
+Assets/Objects/Penguin1/penguin.blend1
+Assets/Objects/Penguin1/penguin.blend1.meta
+UserSettings/EditorUserSettings.asset
+Logs/
+Assets/Psychose Interactive/NGSS/ShowcaseSceneDirectionalLight.unity
+Assets/Psychose Interactive/NGSS/ShowcaseSceneDirectionalLight.unity.meta
+Assets/Psychose Interactive/NGSS/ShowcaseSceneFrustumShadows.unity
+Assets/Psychose Interactive/NGSS/ShowcaseSceneFrustumShadows.unity.meta
+Assets/Psychose Interactive/NGSS/ShowcaseScenePointLight.unity
+Assets/Psychose Interactive/NGSS/ShowcaseScenePointLight.unity.meta
+Assets/Psychose Interactive/NGSS/ShowcaseSceneSpotLight.unity
+Assets/Psychose Interactive/NGSS/ShowcaseSceneSpotLight.unity.meta
+Assets/Psychose Interactive/NGSS/Media/
+
+MasterServer/Lidgren.Network/bin/
+MasterServer/MasterServerCore/bin/
+MasterServer/Chordata.MasterServerShared/bin/
+*.blend1
+MasterServer/LidgrenCrashTest/bin/
+MasterServer/ChordataMasterServer/bin/
+UserSettings/
+MasterServer/MasterServerShared/MasterServerShared/bin/
+.idea/
