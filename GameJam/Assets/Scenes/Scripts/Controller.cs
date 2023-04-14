@@ -63,6 +63,7 @@ public class Controller : MonoBehaviour
         {
             Avatar.NavigationInput = new Vector2(Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
             Avatar.JumpInput.Value = Input.GetKey(KeyCode.Space);
+            Avatar.RollInput.Value = Input.GetKey(KeyCode.LeftShift);
         }
     }
 }

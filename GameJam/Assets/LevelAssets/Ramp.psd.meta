@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bf8cb0a2ae1ef11449706fd21cd700d4
+guid: b2b150cdcbde64945b1d335f5768f528
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -42,7 +42,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -52,7 +52,7 @@ TextureImporter:
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
-  spriteTessellationDetail: -1
+  spriteTessellationDetail: 0.3
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
@@ -115,42 +115,76 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: Button_0
-      rect:
-        serializedVersion: 2
-        x: 11
-        y: 18
-        width: 62
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d89e968a3984cff42861e057ad442493
-      internalID: 1304068970
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
-    physicsShape: []
+    physicsShape:
+    - - {x: -182.5, y: -121.5}
+      - {x: -168.5, y: -123.5}
+      - {x: -155.5, y: -125.5}
+      - {x: -135.5, y: -128.5}
+      - {x: -121.5, y: -130.5}
+      - {x: -108.5, y: -132.5}
+      - {x: -81.5, y: -136.5}
+      - {x: -74.5, y: -137.5}
+      - {x: -1.5, y: -137.5}
+      - {x: 9.5, y: -136.5}
+      - {x: 41.5, y: -133.5}
+      - {x: 83.5, y: -129.5}
+      - {x: 90.5, y: -128.5}
+      - {x: 137.5, y: -101.5}
+      - {x: 154.5, y: -91.5}
+      - {x: 169.5, y: -82.5}
+      - {x: 178.5, y: -73.5}
+      - {x: 204.5, y: -36.5}
+      - {x: 209.5, y: -29.5}
+      - {x: 209.5, y: 133.5}
+      - {x: 179.5, y: 133.5}
+      - {x: 179.5, y: 104.5}
+      - {x: 180.5, y: 100.5}
+      - {x: 181.5, y: 91.5}
+      - {x: 182.5, y: 79.5}
+      - {x: 183.5, y: 52.5}
+      - {x: 181.5, y: 39.5}
+      - {x: 178.5, y: 18.5}
+      - {x: 173.5, y: 1.5}
+      - {x: 169.5, y: -8.5}
+      - {x: 164.5, y: -17.5}
+      - {x: 156.5, y: -31.5}
+      - {x: 147.5, y: -42.5}
+      - {x: 137.5, y: -52.5}
+      - {x: 117.5, y: -67.5}
+      - {x: 97.5, y: -78.5}
+      - {x: 80.5, y: -84.5}
+      - {x: 67.5, y: -88.5}
+      - {x: 58.5, y: -91.5}
+      - {x: 29.5, y: -98.5}
+      - {x: 4.5, y: -102.5}
+      - {x: -3.5, y: -103.5}
+      - {x: -13.5, y: -104.5}
+      - {x: -27.5, y: -105.5}
+      - {x: -55.5, y: -106.5}
+      - {x: -75.5, y: -103.5}
+      - {x: -89.5, y: -101.5}
+      - {x: -102.5, y: -99.5}
+      - {x: -131.5, y: -94.5}
+      - {x: -141.5, y: -92.5}
+      - {x: -152.5, y: -90.5}
+      - {x: -223.5, y: -76.5}
+      - {x: -230.5, y: -74.5}
+      - {x: -231.5, y: -137.5}
+      - {x: -214.5, y: -134.5}
+      - {x: -187.5, y: -120.5}
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 0
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      Button_0: 1304068970
+    nameFileIdTable: {}
   spritePackingTag: 
-  pSDRemoveMatte: 1
+  pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 1
   userData: 
   assetBundleName: 

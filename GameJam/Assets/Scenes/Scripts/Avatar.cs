@@ -1,3 +1,4 @@
+using System;
 using SeweralIdeas.UnityUtils;
 using SeweralIdeas.Utils;
 using UnityEngine;
@@ -12,6 +13,8 @@ public class Avatar : Actor
 {
     [SerializeField] private float groundProximity = 0.1f;
     [SerializeField] private LayerMask groundMask;
+    [SerializeField] private Collider2D[] m_colliders;
+    [SerializeField] private Collider2D m_grounder;
     
     [Header("Movement")]
     [SerializeField] private float speed = 3;
@@ -20,7 +23,11 @@ public class Avatar : Actor
     [SerializeField] private float jumpSpeed = 2f;
     [SerializeField] private float jumpAcceleration = 30f;
     [SerializeField] private float m_maxJumpFuel = 0.1f;
+    [SerializeField] private float m_rollForce = 1f;
 
+    [SerializeField] private PhysicsMaterial2D m_rollMaterial;
+    [SerializeField] private PhysicsMaterial2D m_walkMaterial;
+    [SerializeField] private Transform m_dontRoll;
     
     private readonly MultiControl<PlayerAction> m_availableAction = new();
     private Rigidbody2D m_rigidbody;
@@ -28,14 +35,17 @@ public class Avatar : Actor
 
     public Vector2 NavigationInput;
     public readonly Reactive<bool> JumpInput = new();
+    public readonly Reactive<bool> RollInput = new();
 
     private AnimatorFloat m_idGoingDirection = "GoingDirection";
     private AnimatorFloat m_idWalkSpeed = "WalkSpeed";
+    private AnimatorBool m_idRolling = "Rolling";
     private AnimatorTrigger m_idJump = "Jump";
 
     private bool m_jumpInNext;
     private bool m_jumpQueued;
     private float m_jumpFuel;
+    private readonly Collider2D[] m_colliderBuffer = new Collider2D[32];
 
 
     protected void Awake()
@@ -43,8 +53,21 @@ public class Avatar : Actor
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
         JumpInput.Changed += JumpInputChanged;
+        RollInput.Changed += RollInputChanged;
+        
+        RollInputChanged(RollInput.Value);
     }
     
+    private void RollInputChanged(bool roll)
+    {
+        var material = roll ? m_rollMaterial : m_walkMaterial;
+        
+        foreach (Collider2D coll in m_colliders)
+            coll.sharedMaterial = material;
+
+        m_rigidbody.constraints = roll ? RigidbodyConstraints2D.None : RigidbodyConstraints2D.FreezeRotation;
+    }
+
     public enum ActionPriority
     {
         Pickup = 0
@@ -77,22 +100,43 @@ public class Avatar : Actor
             var dir = Mathf.Sign(NavigationInput.x);
             m_animator.SetValue(m_idGoingDirection, dir);
         }
-        
-        m_animator.SetValue(m_idWalkSpeed, IsGrounded()? Mathf.Abs(m_rigidbody.velocity.x) : 0f);
+
+        float playWalk = (IsGrounded() && !RollInput.Value) ? Mathf.Abs(m_rigidbody.velocity.x) : 0f;
+        m_animator.SetValue(m_idWalkSpeed, playWalk);
+        m_animator.SetValue(m_idRolling, RollInput.Value);
         
         
         Debug.DrawLine(transform.position, transform.position - Vector3.up * groundProximity, IsGrounded()? Color.green : Color.red);
     }
-    
-    
+
+    protected void LateUpdate()
+    {
+        m_dontRoll.rotation = Quaternion.identity;
+    }
+
+
     // Update is called once per frame
     void FixedUpdate()
     {
-        HandleMovement();
+        if(RollInput.Value)
+        {
+            Vector2 force = new()
+            {
+                x = NavigationInput.x * m_rollForce,
+                y = 0
+            };
+            m_rigidbody.AddForce(force, ForceMode2D.Force);
+        }
+        else
+        {
+            m_rigidbody.rotation = Mathf.MoveTowardsAngle(m_rigidbody.rotation, 0, Time.deltaTime * 360f);
+            HandleWalking();
+        }
+        
         HandleJumping();
     }
 
-    void HandleMovement()
+    void HandleWalking()
     {
         float targetVelocityX = NavigationInput.x * speed;
         float acc = IsGrounded() ? acceleration : airAcceleration;
@@ -156,8 +200,14 @@ public class Avatar : Actor
     
     public bool IsGrounded(out Collider2D collider)
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, groundProximity, groundMask);
-        collider = hit.collider;
-        return hit;
+        var filter = new ContactFilter2D()
+        {
+            layerMask = groundMask,
+            useLayerMask = true
+        };
+        var overlapCount = m_grounder.OverlapCollider(filter, m_colliderBuffer);
+
+        collider = overlapCount > 0 ? m_colliderBuffer[0] : null;
+        return overlapCount > 0;
     }
 }
