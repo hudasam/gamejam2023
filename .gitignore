@@ -56,3 +56,4 @@ MasterServer/ChordataMasterServer/bin/
 UserSettings/
 MasterServer/MasterServerShared/MasterServerShared/bin/
 .idea/
+*.csproj

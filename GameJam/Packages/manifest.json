@@ -1,5 +1,9 @@
 {
   "dependencies": {
+    "com.seweralideas.replayableeffects": "https://github.com/Pangamini/seweralideas-replayableeffects.git",
+    "com.seweralideas.stackpool": "https://github.com/Pangamini/seweralideas-stackpool.git",
+    "com.seweralideas.statemachines": "https://github.com/Pangamini/seweralideas-statemachines.git",
+    "com.seweralideas.unityutils": "https://github.com/Pangamini/seweralideas-unityutils.git",
     "com.unity.collab-proxy": "2.0.1",
     "com.unity.feature.development": "1.0.1",
     "com.unity.ide.rider": "3.0.18",

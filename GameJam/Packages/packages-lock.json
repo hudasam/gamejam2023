@@ -1,10 +1,61 @@
 {
   "dependencies": {
+    "com.seweralideas.replayableeffects": {
+      "version": "https://github.com/Pangamini/seweralideas-replayableeffects.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "3fe9a33a59cc6c9960d4e056c3e6d37cf0fe49d3"
+    },
+    "com.seweralideas.stackpool": {
+      "version": "https://github.com/Pangamini/seweralideas-stackpool.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "e65c74c1d1b848ea86ee04d2c3efceccc2ed43d1"
+    },
+    "com.seweralideas.statemachines": {
+      "version": "https://github.com/Pangamini/seweralideas-statemachines.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "f719b538f1e9039243d2a105c7c909d981881dd5"
+    },
+    "com.seweralideas.unityutils": {
+      "version": "https://github.com/Pangamini/seweralideas-unityutils.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.burst": "1.6.6",
+        "com.unity.mathematics": "1.2.6",
+        "com.unity.collections": "1.2.4"
+      },
+      "hash": "cdf99ca222c99e2c9bc8f9b7708aca4d7e448b1c"
+    },
+    "com.unity.burst": {
+      "version": "1.6.6",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.mathematics": "1.2.1"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.collab-proxy": {
       "version": "2.0.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.collections": {
+      "version": "1.2.4",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.burst": "1.6.6",
+        "com.unity.test-framework": "1.1.31"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.editorcoroutines": {
@@ -56,6 +107,13 @@
     "com.unity.ide.vscode": {
       "version": "1.2.5",
       "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.mathematics": {
+      "version": "1.2.6",
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
