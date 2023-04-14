@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +11,9 @@ public class RopeScript : MonoBehaviour
     private GameObject prevNodeRef;
     private bool ropeSegmented;
 
+    private List<GameObject> nodePositions = new List<GameObject>();
+    private LineRenderer lineRenderer;
+    int nodeCount = 1;
 
 
 
@@ -20,6 +22,8 @@ public class RopeScript : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         prevNodeRef = gameObject;
         ropeSegmented = false;
+        lineRenderer = GetComponent<LineRenderer>();
+        
     }
     // Start is called before the first frame update
     void Start()
@@ -35,11 +39,12 @@ public class RopeScript : MonoBehaviour
         }
         else if (!ropeSegmented)
         {
+            nodePositions.Add(transform.gameObject);
             SegmentRope();
             prevNodeRef.GetComponent<HingeJoint2D>().connectedBody = player.GetComponent<Rigidbody2D>();
             ropeSegmented = true;
         }
-
+        renderRope();
         
     }
 
@@ -49,25 +54,48 @@ public class RopeScript : MonoBehaviour
         {
             CreateNode();
         }
+        CreateNode((Vector2)player.transform.position);
     }
     void CreateNode() 
     {
         Vector2 relativeNodePos = (player.transform.position - prevNodeRef.transform.position).normalized;
         relativeNodePos *= segmentSize;
         Vector2 nodePos = (Vector2)prevNodeRef.transform.position + relativeNodePos;
+        
 
         GameObject newNode = (GameObject)Instantiate(nodePrefab, nodePos, Quaternion.identity);
 
         newNode.transform.SetParent(transform);
         prevNodeRef.GetComponent<HingeJoint2D>().connectedBody = newNode.GetComponent<Rigidbody2D>();
 
+        nodePositions.Add(newNode);
+        nodeCount++;
         prevNodeRef = newNode;
 
+    }
+    void CreateNode(Vector2 position) 
+    {
+        GameObject newNode = (GameObject)Instantiate(nodePrefab, position, Quaternion.identity);
+        newNode.transform.SetParent(transform);
+        prevNodeRef.GetComponent<HingeJoint2D>().connectedBody = newNode.GetComponent<Rigidbody2D>();
+        nodePositions.Add(newNode);
+        nodeCount++;
+        prevNodeRef = newNode;
     }
 
     float NodeDistance(GameObject node) 
     {
         return Vector2.Distance(player.transform.position, prevNodeRef.transform.position);
+    }
+    void renderRope()
+    {
+        lineRenderer.positionCount = nodeCount;
+
+        for (int i = 0;i<nodePositions.Count;i++) {
+            lineRenderer.SetPosition(i, nodePositions[i].transform.position);
+        }
+        //lineRenderer.SetPosition(nodeCount,player.transform.position);
+
     }
 
 

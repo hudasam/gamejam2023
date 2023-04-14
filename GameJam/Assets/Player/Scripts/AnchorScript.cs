@@ -9,10 +9,12 @@ public class AnchorScript : MonoBehaviour
 
     [SerializeField] GameObject anchor;
 
-    GameObject rope;
+    public GameObject rope;
+    private bool roped;
     private void Awake()
     {
         GroundMask = LayerMask.GetMask("Ground");
+        rope = null;
     }
     // Start is called before the first frame update
     void Start()
@@ -61,5 +63,9 @@ public class AnchorScript : MonoBehaviour
         }
         anchorDest = Vector2.zero;
         return false;
+    }
+    public bool isRoped() {
+        if (rope == null) return false;
+        return true;
     }
 }
