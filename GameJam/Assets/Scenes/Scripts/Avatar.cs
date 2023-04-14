@@ -11,7 +11,7 @@ using UnityEngine;
 
 public class Avatar : Actor
 {
-    private readonly MultiControl<Action> m_availableAction = new();
+    private readonly MultiControl<PlayerAction> m_availableAction = new();
     private Rigidbody2D m_rigidbody;
 
     
@@ -25,5 +25,5 @@ public class Avatar : Actor
         Pickup = 0
     }
     
-    public MultiControl<Action> AvailableAction => m_availableAction;
+    public MultiControl<PlayerAction> AvailableAction => m_availableAction;
 }

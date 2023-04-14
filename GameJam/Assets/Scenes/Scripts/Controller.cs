@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
     [SerializeField] private CameraController m_cameraController;
     [SerializeField] private Avatar m_avatar;
+
+    [SerializeField] private TMP_Text m_availableActionIndicator;
 
     public Avatar Avatar
     {
@@ -36,9 +40,17 @@ public class Controller : MonoBehaviour
         Avatar = avatar;
     }
 
-    private void OnAvatarActionChanged(Action obj)
+    private void OnAvatarActionChanged(PlayerAction obj)
     {
-        Debug.Log($"Action changed to {obj}");
+        if(obj != null)
+        {
+            m_availableActionIndicator.gameObject.SetActive(true);
+            m_availableActionIndicator.text = obj.Description;
+        }
+        else
+        {
+            m_availableActionIndicator.gameObject.SetActive(false);
+        }
     }
 
 }

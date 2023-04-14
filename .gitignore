@@ -57,3 +57,4 @@ UserSettings/
 MasterServer/MasterServerShared/MasterServerShared/bin/
 .idea/
 *.csproj
+*.sln
