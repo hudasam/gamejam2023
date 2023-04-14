@@ -252,7 +252,7 @@ SpriteRenderer:
   m_Size: {x: 0.86, y: 0.81}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1797344339
@@ -349,7 +349,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4404603240819110058}
   - component: {fileID: 8807395279680229033}
-  - component: {fileID: 4404603240819110062}
   - component: {fileID: 4404603240819110063}
   - component: {fileID: 943849175}
   m_Layer: 6
@@ -392,25 +391,19 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 8
+  m_colliders: []
+  m_grounder: {fileID: 0}
   speed: 3
   acceleration: 50
   airAcceleration: 10
   jumpSpeed: 2
   jumpAcceleration: 30
   m_maxJumpFuel: 0.1
+  m_rollForce: 1
+  m_rollMaterial: {fileID: 0}
+  m_walkMaterial: {fileID: 0}
+  m_dontRoll: {fileID: 0}
   NavigationInput: {x: 0, y: 0}
---- !u!114 &4404603240819110062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4404603240819110064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5781c5450a459fc4682ecaa474a9994a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &4404603240819110063
 Rigidbody2D:
   serializedVersion: 4

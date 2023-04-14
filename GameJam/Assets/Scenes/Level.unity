@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_cameraFixture: {fileID: 58517}
   m_smoothTime: {x: 0.2, y: 0.5}
   m_velocityToDistance: {x: 0.5, y: 0.5}
-  m_xVelThreshold: 0
+  m_xVelThreshold: 1
 --- !u!1 &28203436
 GameObject:
   m_ObjectHideFlags: 0
@@ -2237,8 +2237,8 @@ MonoBehaviour:
   - {fileID: 2596021714659783745}
   m_grounder: {fileID: 377551441}
   speed: 3
-  acceleration: 50
-  airAcceleration: 10
+  acceleration: 6
+  airAcceleration: 3
   jumpSpeed: 2
   jumpAcceleration: 30
   m_maxJumpFuel: 0.1
@@ -2262,6 +2262,7 @@ MonoBehaviour:
   maxDistance: 5
   GroundMask: 0
   anchor: {fileID: 1866392879497954685, guid: 6ce5f1a80fae8ce42a1503d0092b3856, type: 3}
+  rope: {fileID: 0}
 --- !u!4 &8235759829599736629
 Transform:
   m_ObjectHideFlags: 0

@@ -41,7 +41,7 @@ public class RopeScript : MonoBehaviour
         {
             nodePositions.Add(transform.gameObject);
             SegmentRope();
-            prevNodeRef.GetComponent<HingeJoint2D>().connectedBody = player.GetComponent<Rigidbody2D>();
+            prevNodeRef.GetComponent<Joint2D>().connectedBody = player.GetComponent<Rigidbody2D>();
             ropeSegmented = true;
         }
         renderRope();
@@ -66,7 +66,7 @@ public class RopeScript : MonoBehaviour
         GameObject newNode = (GameObject)Instantiate(nodePrefab, nodePos, Quaternion.identity);
 
         newNode.transform.SetParent(transform);
-        prevNodeRef.GetComponent<HingeJoint2D>().connectedBody = newNode.GetComponent<Rigidbody2D>();
+        prevNodeRef.GetComponent<Joint2D>().connectedBody = newNode.GetComponent<Rigidbody2D>();
 
         nodePositions.Add(newNode);
         nodeCount++;
@@ -77,7 +77,7 @@ public class RopeScript : MonoBehaviour
     {
         GameObject newNode = (GameObject)Instantiate(nodePrefab, position, Quaternion.identity);
         newNode.transform.SetParent(transform);
-        prevNodeRef.GetComponent<HingeJoint2D>().connectedBody = newNode.GetComponent<Rigidbody2D>();
+        prevNodeRef.GetComponent<Joint2D>().connectedBody = newNode.GetComponent<Rigidbody2D>();
         nodePositions.Add(newNode);
         nodeCount++;
         prevNodeRef = newNode;

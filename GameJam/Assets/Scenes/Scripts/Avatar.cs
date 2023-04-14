@@ -18,6 +18,7 @@ public class Avatar : Actor
     
     [Header("Movement")]
     [SerializeField] private float speed = 3;
+    [SerializeField] private float maxAirSpeed = 6;
     [SerializeField] private float acceleration = 50;
     [SerializeField] private float airAcceleration = 10;
     [SerializeField] private float jumpSpeed = 2f;
@@ -130,19 +131,29 @@ public class Avatar : Actor
         else
         {
             m_rigidbody.rotation = Mathf.MoveTowardsAngle(m_rigidbody.rotation, 0, Time.deltaTime * 360f);
-            HandleWalking();
+
+            if(IsGrounded())
+            {
+                //walking
+                float targetVelocityX = NavigationInput.x * speed;
+                Vector2 velocity = m_rigidbody.velocity;
+                velocity.x = Mathf.MoveTowards(velocity.x, targetVelocityX, acceleration * Time.fixedDeltaTime);
+                m_rigidbody.velocity = velocity;
+            }
+            else
+            {
+                // air control
+                if(Mathf.Abs(NavigationInput.x) > 0.1f)
+                {
+                    float targetVelocityX = NavigationInput.x * maxAirSpeed;
+                    Vector2 velocity = m_rigidbody.velocity;
+                    velocity.x = Mathf.MoveTowards(velocity.x, targetVelocityX, airAcceleration * Time.fixedDeltaTime);
+                    m_rigidbody.velocity = velocity;
+                }
+            }
         }
         
         HandleJumping();
-    }
-
-    void HandleWalking()
-    {
-        float targetVelocityX = NavigationInput.x * speed;
-        float acc = IsGrounded() ? acceleration : airAcceleration;
-        Vector2 velocity = m_rigidbody.velocity;
-        velocity.x = Mathf.MoveTowards(velocity.x, targetVelocityX, acc * Time.fixedDeltaTime);
-        m_rigidbody.velocity = velocity;
     }
 
     void HandleJumping()
@@ -170,7 +181,7 @@ public class Avatar : Actor
             m_jumpInNext = false;
         }
         
-        // handle acceleration
+        // handle jump acceleration
         if(m_jumpFuel > 0f)
         {
             m_jumpFuel -= Time.fixedDeltaTime;
