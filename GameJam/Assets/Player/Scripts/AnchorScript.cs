@@ -31,12 +31,12 @@ public class AnchorScript : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && rope == null) {
             // TODO change
             
-            ThrowAnchor(out rope);
+            //ThrowAnchor(out rope);
         }
-        if (Input.GetMouseButtonDown(1) && rope!=null) {
+        /*if (Input.GetMouseButtonDown(1) && rope!=null) {
             Destroy(rope);
             rope = null;
-        }
+        }*/
     }
 
     void ThrowAnchor(out GameObject rope) 

@@ -29,8 +29,9 @@ public class Controller : MonoBehaviour
             {
                 m_avatar.AvailableAction.ValueChanged += OnAvatarActionChanged;
             }
-            
-            OnAvatarActionChanged(m_avatar ? m_avatar.AvailableAction.Value : null);
+
+            var t = m_avatar ? m_avatar.AvailableAction.Value : (null, null);
+            OnAvatarActionChanged(t);
             m_cameraController.SetTarget(m_avatar ? m_avatar.transform : null);
         }
     }
@@ -43,12 +44,12 @@ public class Controller : MonoBehaviour
         Avatar = avatar;
     }
     
-    private void OnAvatarActionChanged(PlayerAction obj)
+    private void OnAvatarActionChanged((PlayerAction obj,Transform transform) tup)
     {
-        if(obj != null)
+        if(tup.obj != null)
         {
             m_availableActionIndicator.gameObject.SetActive(true);
-            m_availableActionIndicator.text = obj.Description;
+            m_availableActionIndicator.text = tup.obj.Description;
         }
         else
         {
@@ -64,7 +65,7 @@ public class Controller : MonoBehaviour
             Avatar.NavigationInput = Input.GetAxisRaw("Horizontal");
             Avatar.JumpInput.Value = Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W);
             Avatar.RollInput.Value = Input.GetKey(KeyCode.LeftShift);
-            Avatar.ContextInput.Value = Input.GetKey(KeyCode.E); //subject to change
+            Avatar.ContextInput.Value = Input.GetKey(KeyCode.E);
         }
     }
 }

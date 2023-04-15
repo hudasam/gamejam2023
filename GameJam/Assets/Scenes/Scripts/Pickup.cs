@@ -8,7 +8,7 @@ public class Pickup : MonoBehaviour
     [SerializeField] private PlayerAction m_playerAction;
     
     private Zone m_zone;
-    private Dictionary<Avatar, MultiControl<PlayerAction>.Request> m_actionRequests = new();
+    private Dictionary<Avatar, MultiControl<(PlayerAction,Transform)>.Request> m_actionRequests = new();
 
 
     protected void Awake()
@@ -30,7 +30,7 @@ public class Pickup : MonoBehaviour
             {
                 if(m_playerAction == null)
                     Debug.LogError($"{nameof(m_playerAction)} is null", gameObject);
-                var request = avatar.AvailableAction.CreateRequest(name, (int)Avatar.ActionPriority.Pickup, m_playerAction, true);
+                var request = avatar.AvailableAction.CreateRequest(name, (int)Avatar.ActionPriority.Pickup, (m_playerAction,transform), true);
                 m_actionRequests[avatar] = request;
             }
             else
