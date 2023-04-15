@@ -1791,7 +1791,6 @@ GameObject:
   m_Component:
   - component: {fileID: 86489695642130651}
   - component: {fileID: 5055618184535566040}
-  - component: {fileID: 5055618184535566041}
   - component: {fileID: 86489695642130654}
   - component: {fileID: 4328819764919293606}
   m_Layer: 6
@@ -2229,40 +2228,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f473150fdf981d4ba2b69108d715077, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundProximity: 0.3
-  groundMask:
+  m_groundProximity: 0.3
+  m_groundMask:
     serializedVersion: 2
     m_Bits: 8
   m_colliders:
   - {fileID: 2596021714659783745}
   m_grounder: {fileID: 377551441}
-  speed: 3
-  acceleration: 6
-  airAcceleration: 3
-  jumpSpeed: 2
-  jumpAcceleration: 30
-  m_maxJumpFuel: 0.1
+  m_ropePrefab: {fileID: 1866392879497954672, guid: 6ce5f1a80fae8ce42a1503d0092b3856, type: 3}
+  m_walkSpeed: 3
+  m_maxAirSpeed: 4
+  m_walkAcceleration: 6
+  m_airAcceleration: 3
+  m_ropeAirAcceleration: 4
+  m_maxRopeAirSpeed: 7
+  m_jumpSpeed: 3
+  m_jumpBoostAcceleration: 20
+  m_jumpBoostDuration: 0.15
   m_rollForce: 5
+  m_maxRopeDistance: 5
   m_rollMaterial: {fileID: 6200000, guid: 45448211ae09ecb458bf87ee3be59e5b, type: 2}
   m_walkMaterial: {fileID: 6200000, guid: fd0e9e636c627484a9866912dc1de876, type: 2}
   m_dontRoll: {fileID: 1435625941}
-  NavigationInput: {x: 0, y: 0}
---- !u!114 &5055618184535566041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 86489695642130625}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08791371d6af386479538da76b94009a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxDistance: 5
-  GroundMask: 0
-  anchor: {fileID: 1866392879497954685, guid: 6ce5f1a80fae8ce42a1503d0092b3856, type: 3}
-  rope: {fileID: 0}
 --- !u!4 &8235759829599736629
 Transform:
   m_ObjectHideFlags: 0
