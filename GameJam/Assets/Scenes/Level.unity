@@ -1789,14 +1789,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8807395279680229033, guid: fdd40d072ab6a57438668386d4beab9f, type: 3}
-      propertyPath: m_needleHint
-      value: 
-      objectReference: {fileID: 11400000, guid: 2f9fa8b381a6ac54eb3685d69ebad8c3, type: 2}
-    - target: {fileID: 8807395279680229033, guid: fdd40d072ab6a57438668386d4beab9f, type: 3}
-      propertyPath: m_threadHint
-      value: 
-      objectReference: {fileID: 11400000, guid: 3be3a957c26218c48a56efe8241cc151, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fdd40d072ab6a57438668386d4beab9f, type: 3}
 --- !u!1001 &2311550367507004601
@@ -1988,6 +1980,50 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8371221854786793130, guid: bba2a47c62f257245b3cb38cec61849b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 8371221854786793130, guid: bba2a47c62f257245b3cb38cec61849b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 8371221854786793130, guid: bba2a47c62f257245b3cb38cec61849b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 8371221854786793130, guid: bba2a47c62f257245b3cb38cec61849b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8371221854786793130, guid: bba2a47c62f257245b3cb38cec61849b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.81764764
+      objectReference: {fileID: 0}
+    - target: {fileID: 8371221854786793130, guid: bba2a47c62f257245b3cb38cec61849b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8371221854786793130, guid: bba2a47c62f257245b3cb38cec61849b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8371221854786793130, guid: bba2a47c62f257245b3cb38cec61849b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.57571906
+      objectReference: {fileID: 0}
+    - target: {fileID: 8371221854786793130, guid: bba2a47c62f257245b3cb38cec61849b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -70.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8371221854786793130, guid: bba2a47c62f257245b3cb38cec61849b, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8371221854786793133, guid: bba2a47c62f257245b3cb38cec61849b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: fe245def558351748b8804f5a732b818, type: 3}
     - target: {fileID: 8371221854913682263, guid: bba2a47c62f257245b3cb38cec61849b, type: 3}
       propertyPath: m_Name
       value: NeedlePickup
