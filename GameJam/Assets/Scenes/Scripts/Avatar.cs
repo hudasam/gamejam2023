@@ -106,6 +106,7 @@ public class Avatar : Actor
         
         m_machine.Initialize(this);
         ContextInput.Changed += ContextInputChanged;
+
     }
     
     public bool HasThread

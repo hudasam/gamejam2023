@@ -22,6 +22,7 @@ public class Beetle : Actor, INeedleDamageReceiver
     [SerializeField] private float m_speed = 3f;
     [SerializeField] private float m_acceleration = 3f;
 
+    private AudioSource soundSrc;
 
     private static readonly AnimatorFloat m_walkSpeed = "WalkSpeed";
     private static readonly AnimatorTrigger m_attack = "Attack";
@@ -37,6 +38,7 @@ public class Beetle : Actor, INeedleDamageReceiver
         m_animator = GetComponent<Animator>();
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_attackTrigger.ActorEnterExit += OnAttackTriggerEnterExit;
+        soundSrc = GetComponent<AudioSource>();
     }
     
     private void OnAttackTriggerEnterExit(Actor actor, bool entered)
@@ -94,6 +96,8 @@ public class Beetle : Actor, INeedleDamageReceiver
     {
         if(m_dead)
             return;
+
+        soundSrc.Play();
         
         m_hitPoints--;
         if(m_hitPoints <= 0)
