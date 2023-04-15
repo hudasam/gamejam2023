@@ -12,6 +12,12 @@ public class Controller : MonoBehaviour
 
     [SerializeField] private TMP_Text m_availableActionIndicator;
 
+    [SerializeField] private KeyCode m_leftButton;
+    [SerializeField] private KeyCode m_rightButton;
+    [SerializeField] private KeyCode m_jumpButton;
+    [SerializeField] private KeyCode m_actionButton;
+    [SerializeField] private KeyCode m_attackButton;
+    
     public Avatar Avatar
     {
         get => m_avatar;
@@ -61,9 +67,10 @@ public class Controller : MonoBehaviour
     {
         if(Avatar)
         {
-            Avatar.NavigationInput = Input.GetAxisRaw("Horizontal");
-            Avatar.JumpInput.Value = Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W);
-            Avatar.RollInput.Value = Input.GetKey(KeyCode.LeftShift);
+            Avatar.NavigationInput = (Input.GetKey(m_leftButton) ? -1 : 0) + (Input.GetKey(m_rightButton) ? 1 : 0);
+            Avatar.JumpInput.Value = Input.GetKey(m_jumpButton);
+            Avatar.AttackInput.Value = Input.GetKey(m_attackButton);
+            Avatar.ActionInput.Value = Input.GetKey(m_actionButton);
         }
     }
 }

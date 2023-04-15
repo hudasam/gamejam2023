@@ -15,6 +15,7 @@ public class Beetle : Actor
     [SerializeField] private Zone m_attackTrigger;
 
     [SerializeField] private Vector2 m_punchDeltaV;
+    [SerializeField] private float m_punchKnockoutDuration = 2f;
     
     [Header("Movement")]
     [SerializeField] private float m_speed = 3f;
@@ -35,7 +36,7 @@ public class Beetle : Actor
         if(entered && actor is Avatar avatar)
         {
             PlayPunchEffect();
-            avatar.ReceivePunch(this, m_punchDeltaV);
+            avatar.ReceivePunch(this, m_punchDeltaV, m_punchKnockoutDuration);
         }
     }
 
