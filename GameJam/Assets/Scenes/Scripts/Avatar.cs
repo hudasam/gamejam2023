@@ -133,6 +133,17 @@ public class Avatar : Actor
         }
     }
 
+    private void UpdateHints()
+    {
+        if (HasNeedle) m_hintsUI.MaskHint(m_needleHint);
+        else m_hintsUI.UnmaskHint(m_needleHint);
+
+        if (HasThread) m_hintsUI.MaskHint(m_threadHint);
+        else m_hintsUI.UnmaskHint(m_threadHint);
+
+        if (HasThread && HasNeedle) ;//TODO make thread and needle hint
+    }
+
     protected override void OnDestroy()
     {
         m_machine.Shutdown();
@@ -192,8 +203,17 @@ public class Avatar : Actor
         switch (AvailableAction.Value.act.Type)
         {
             case PlayerAction.ActionType.Swing:
-                Debug.Log("Send rope");
+                //Debug.Log("Send rope");
+                if(HasThread)
                 m_machine.SendMessage(msg_throwRope, AvailableAction.Value.transform.position);
+                break;
+            case PlayerAction.ActionType.Use:
+                if (HasThread && HasNeedle)
+                    if (AvailableAction.Value.transform.GetComponentInParent<Actor>() is Rat) 
+                    { 
+                        
+                    }
+                    ;
                 break;
         }
     }
