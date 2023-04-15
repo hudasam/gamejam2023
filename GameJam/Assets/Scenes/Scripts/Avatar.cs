@@ -319,8 +319,8 @@ public class Avatar : Actor
             protected override void OnEnter()
             {
                 base.OnEnter();
-                actor.m_rigidbody.constraints = RigidbodyConstraints2D.None;
-                actor.SetPhysMaterial(actor.m_rollMaterial);
+                actor.m_rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+                actor.SetPhysMaterial(actor.m_walkMaterial);
             }
 
             protected override void OnExit()
@@ -332,10 +332,12 @@ public class Avatar : Actor
 
             void ITick.Tick(float deltaTime)
             {
-                actor.m_rigidbody.rotation = Mathf.MoveTowardsAngle(actor.m_rigidbody.rotation, 0, Time.deltaTime * 360f);
-
                 actor.HandleWalking(actor.m_walkSpeed, actor.m_walkAcceleration, actor.m_maxRopeAirSpeed, actor.m_ropeAirAcceleration);
                 actor.HandleJumping();
+
+                var ropeDirection = m_rope.GetRopeDirection();
+                float targetRotation = Mathf.Atan2(ropeDirection.y, ropeDirection.x) * Mathf.Rad2Deg - 90f;
+                actor.m_rigidbody.rotation = Mathf.MoveTowardsAngle(actor.m_rigidbody.rotation, targetRotation, Time.deltaTime * 360f);
                 
                 // if(actor.RollInput.Value)
                 // {

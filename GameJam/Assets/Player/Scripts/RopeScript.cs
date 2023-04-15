@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using SeweralIdeas.UnityUtils;
 using UnityEngine;
 
 public class RopeScript : MonoBehaviour
@@ -11,11 +12,16 @@ public class RopeScript : MonoBehaviour
     private GameObject prevNodeRef;
     private bool ropeSegmented;
 
-    private List<GameObject> nodePositions = new List<GameObject>();
+    private List<Transform> nodePositions = new List<Transform>();
     private LineRenderer lineRenderer;
-    int nodeCount = 1;
 
+    public Vector2 GetRopeDirection()
+    {
+        if(nodePositions.Count < 2)
+            return Vector2.zero;
 
+        return nodePositions[^2].position.xy() - nodePositions[^1].position.xy();
+    }
 
     private void Awake()
     {
@@ -39,7 +45,7 @@ public class RopeScript : MonoBehaviour
         }
         else if (!ropeSegmented)
         {
-            nodePositions.Add(transform.gameObject);
+            nodePositions.Add(transform);
             SegmentRope();
             prevNodeRef.GetComponent<Joint2D>().connectedBody = player.GetComponent<Rigidbody2D>();
             ropeSegmented = true;
@@ -68,8 +74,7 @@ public class RopeScript : MonoBehaviour
         newNode.transform.SetParent(transform);
         prevNodeRef.GetComponent<Joint2D>().connectedBody = newNode.GetComponent<Rigidbody2D>();
 
-        nodePositions.Add(newNode);
-        nodeCount++;
+        nodePositions.Add(newNode.transform);
         prevNodeRef = newNode;
 
     }
@@ -78,8 +83,7 @@ public class RopeScript : MonoBehaviour
         GameObject newNode = (GameObject)Instantiate(nodePrefab, position, Quaternion.identity);
         newNode.transform.SetParent(transform);
         prevNodeRef.GetComponent<Joint2D>().connectedBody = newNode.GetComponent<Rigidbody2D>();
-        nodePositions.Add(newNode);
-        nodeCount++;
+        nodePositions.Add(newNode.transform);
         prevNodeRef = newNode;
     }
 
@@ -89,7 +93,7 @@ public class RopeScript : MonoBehaviour
     }
     void renderRope()
     {
-        lineRenderer.positionCount = nodeCount;
+        lineRenderer.positionCount = nodePositions.Count;
 
         for (int i = 0;i<nodePositions.Count;i++) {
             lineRenderer.SetPosition(i, nodePositions[i].transform.position);
