@@ -160,8 +160,11 @@ public class Avatar : Actor
         }
     }
 
-    private void HandleAction() 
+    private void HandleAction()
     {
+        if(m_availableAction.Value.act == null)
+            return;
+        
         switch (m_availableAction.Value.act.Type)
         {
             case PlayerAction.ActionType.Swing:
