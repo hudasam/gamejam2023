@@ -12,7 +12,7 @@ public class Controller : SingletonBehaviour<Controller>
     [SerializeField] private Avatar m_avatar;
 
     [SerializeField] private TMP_Text m_availableActionIndicator;
-
+    [SerializeField] private string m_availableActionIndicatorFormat = "Press {0} to {1}";
     [SerializeField] private KeyCode m_leftButton;
     [SerializeField] private KeyCode m_rightButton;
     [SerializeField] private KeyCode m_jumpButton;
@@ -56,7 +56,7 @@ public class Controller : SingletonBehaviour<Controller>
         if(tup.obj != null)
         {
             m_availableActionIndicator.gameObject.SetActive(true);
-            m_availableActionIndicator.text = tup.obj.Description;
+            m_availableActionIndicator.text = string.Format(m_availableActionIndicatorFormat, m_contextButton.ToString(), tup.obj.Description);
         }
         else
         {
