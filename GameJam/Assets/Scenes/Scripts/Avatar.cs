@@ -23,13 +23,15 @@ public class Avatar : Actor
     [SerializeField] private float m_walkSpeed = 3;
     [SerializeField] private float m_maxAirSpeed = 6;
     [SerializeField] private float m_walkAcceleration = 50;
+    [SerializeField] private float m_walkDecceleration = 10;
     [SerializeField] private float m_airAcceleration = 10;
     [SerializeField] private float m_ropeAirAcceleration = 10;
     [SerializeField] private float m_maxRopeAirSpeed = 6;
     [SerializeField] private float m_jumpSpeed = 2f;
     [SerializeField] private float m_jumpBoostAcceleration = 30f;
     [SerializeField] private float m_jumpBoostDuration = 0.1f;
-
+    [SerializeField] private float m_wallJumpSpeed = 3;
+    
     [SerializeField] private float m_maxRopeDistance;
     [SerializeField] private Transform m_flip;
     
@@ -83,8 +85,10 @@ public class Avatar : Actor
     private static readonly Handler<IThrowRope, Vector2> msg_throwRope = (handler, worldPosition) => { handler.ThrowRope(worldPosition); };
     private static readonly Handler<IReceivePunch, (Actor inflictor, Vector2 velocity, float knockoutDuration)> msg_receivePunch = (handler, args) => { handler.ReceivePunch(args.inflictor, args.velocity, args.knockoutDuration); };
     private static readonly Handler<IAttack> msg_attack = (handler) => handler.Attack();
+    
     [SerializeField]
     private double m_attackCooldown = 0.25f;
+    
 
     protected void Awake()
     {
@@ -260,14 +264,15 @@ public class Avatar : Actor
         m_machine.SendMessage(msg_tick, Time.fixedDeltaTime);
     }
 
-    private void HandleWalking(float maxSpeed, float walkAcceleration, float maxAirSpeed, float airAcceleration)
+    private void HandleWalking(float maxSpeed, float walkAcceleration, float walkDecceleration, float maxAirSpeed, float airAcceleration)
     {
         if(IsGrounded())
         {
             //walking
             float targetVelocityX = NavigationInput * maxSpeed;
             Vector2 velocity = m_rigidbody.velocity;
-            velocity.x = Mathf.MoveTowards(velocity.x, targetVelocityX, walkAcceleration * Time.fixedDeltaTime);
+            float acceleration = NavigationInput == 0 || velocity.x * NavigationInput > 0.1f ? walkAcceleration : walkDecceleration;
+            velocity.x = Mathf.MoveTowards(velocity.x, targetVelocityX, acceleration * Time.fixedDeltaTime);
             m_rigidbody.velocity = velocity;
         }
         else
@@ -391,7 +396,7 @@ public class Avatar : Actor
             {
                 actor.m_rigidbody.rotation = Mathf.MoveTowardsAngle(actor.m_rigidbody.rotation, 0, Time.deltaTime * 360f);
 
-                actor.HandleWalking(actor.m_walkSpeed, actor.m_walkAcceleration, actor.m_maxAirSpeed, actor.m_airAcceleration);
+                actor.HandleWalking(actor.m_walkSpeed, actor.m_walkAcceleration, actor.m_walkDecceleration, actor.m_maxAirSpeed, actor.m_airAcceleration);
                 actor.HandleJumping();
             }
             
@@ -443,7 +448,7 @@ public class Avatar : Actor
 
             void ITick.Tick(float deltaTime)
             {
-                actor.HandleWalking(actor.m_walkSpeed, actor.m_walkAcceleration, actor.m_maxRopeAirSpeed, actor.m_ropeAirAcceleration);
+                actor.HandleWalking(actor.m_walkSpeed, actor.m_walkAcceleration, actor.m_walkDecceleration, actor.m_maxRopeAirSpeed, actor.m_ropeAirAcceleration);
                 actor.HandleJumping();
 
                 var ropeDirection = m_rope.GetRopeDirection();
@@ -529,7 +534,26 @@ public class Avatar : Actor
     {
         Debug.Log("Outch! TODO play hit anim", gameObject);
     }
-    
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if(!m_jumpQueued)
+            return;
+
+        m_jumpQueued = false;
+
+        Vector2 normal = Vector2.zero;
+        foreach (ContactPoint2D contactPoint2D in col.contacts)
+        {
+            normal += contactPoint2D.normal;
+        }
+        
+        normal.Normalize();
+        m_rigidbody.velocity += normal * m_wallJumpSpeed;
+        
+        m_animator.Trigger(s_idJump);
+    }
+
     private void ApplyAttackDamage()
     {
         using (HashSetPool<Actor>.Get(out var result))
