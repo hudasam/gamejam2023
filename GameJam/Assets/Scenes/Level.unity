@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1948,6 +1948,11 @@ MonoBehaviour:
   m_cameraController: {fileID: 58518}
   m_avatar: {fileID: 5055618184535566040}
   m_availableActionIndicator: {fileID: 1475100777}
+  m_leftButton: 276
+  m_rightButton: 275
+  m_jumpButton: 273
+  m_contextButton: 122
+  m_attackButton: 120
 --- !u!4 &1784634247
 Transform:
   m_ObjectHideFlags: 0
@@ -2072,8 +2077,9 @@ MonoBehaviour:
   m_flip: {fileID: 1137403311}
   m_frontCollisionSensor: {fileID: 87105502}
   m_attackTrigger: {fileID: 772308016}
-  m_punchDeltaV: {x: -5, y: 5}
-  m_speed: 3
+  m_punchDeltaV: {x: -5, y: 3}
+  m_punchKnockoutDuration: 1
+  m_speed: 1
   m_acceleration: 50
 --- !u!4 &1942904056
 Transform:
@@ -2244,7 +2250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d849230fa1755248b6ddef969a9fb9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerAction: {fileID: 11400000, guid: 2c8585929b2bf4e45b9dcd1f6b508935, type: 2}
+  m_hint: {fileID: 11400000, guid: 2f9fa8b381a6ac54eb3685d69ebad8c3, type: 2}
 --- !u!4 &2038152236
 Transform:
   m_ObjectHideFlags: 0
