@@ -40,8 +40,11 @@ public class Avatar : Actor
     [SerializeField] private Collider2D m_attackArea;
     
     private StateMachine m_machine = new("Avatar", new State_Root());
-    
 
+
+    [SerializeField] private PlayerHint m_needleHint;
+    [SerializeField] private PlayerHint m_threadHint;
+    
     private readonly MultiControl<(PlayerAction act,Transform transform)> m_availableAction = new();
 
     private Rigidbody2D m_rigidbody;
@@ -108,6 +111,11 @@ public class Avatar : Actor
         {
             m_hasThread = value;
             m_animator.SetValue(s_idHasThread, value);
+            if(m_hasThread)
+                m_hintsUI.MaskHint(m_threadHint);
+            else 
+                m_hintsUI.UnmaskHint(m_threadHint);
+            
         }
     }
     
@@ -118,6 +126,10 @@ public class Avatar : Actor
         {
             m_hasNeedle = value;
             m_animator.SetValue(s_idHasNeedle, value);
+            if(m_hasThread)
+                m_hintsUI.MaskHint(m_needleHint);
+            else 
+                m_hintsUI.UnmaskHint(m_needleHint);
         }
     }
 
