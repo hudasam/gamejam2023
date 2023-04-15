@@ -70,6 +70,7 @@ public class AnchorScript : MonoBehaviour
         Vector2 targetDir = (mousePos - playerPos).normalized;
         RaycastHit2D hit = Physics2D.Raycast(playerPos, targetDir, maxDistance, GroundMask);
         Debug.DrawRay(transform.position, targetDir, Color.green);
+        
         if (hit.collider!=null ) {
             anchorDest = hit.point;
             return true;
@@ -83,9 +84,9 @@ public class AnchorScript : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(playerPos, direction, maxDistance, GroundMask);
         if (hit.collider != null)
         {
-            return true;
+            return false;
         }
-        return false;
+        return true;
 
     }
     public bool isRoped() {
