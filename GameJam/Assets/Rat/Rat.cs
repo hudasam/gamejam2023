@@ -6,8 +6,13 @@ using SeweralIdeas.Pooling;
 using SeweralIdeas.UnityUtils;
 using SeweralIdeas.Utils;
 
+
+[RequireComponent(typeof(Animator))]
 public class Rat : Actor, INeedleDamageReceiver
 {
+    
+
+
     [SerializeField] private Collider2D m_frontCollisionSensor;
     [SerializeField] private Zone m_attackTrigger;
     [SerializeField] private Zone m_actionTrigger;
@@ -16,7 +21,14 @@ public class Rat : Actor, INeedleDamageReceiver
     [SerializeField] private float m_punchKnockoutDuration = 2f;
     [SerializeField] private float ratKnockOutTime=1.5f;
 
+
+    private int attackAnim = Animator.StringToHash("Attack");
+    private int knockOutAnim = Animator.StringToHash("knockedOut");
+    private int sewAnim = Animator.StringToHash("Sewed");
+
     private Coroutine knockOutTimerCoroutine;
+
+    [SerializeField] private Animator m_animator;
 
     [SerializeField] private PlayerAction m_playerAction;
     private Dictionary<Avatar, MultiControl<(PlayerAction, Transform)>.Request> m_actionRequests = new();
@@ -32,13 +44,15 @@ public class Rat : Actor, INeedleDamageReceiver
     {
         m_attackTrigger.ActorEnterExit += OnAttackTriggerEnterExit;
         m_actionTrigger.ActorEnterExit += OnActionTriggerEnterExit;
+        m_animator = GetComponent<Animator>();
     }
 
     private void OnAttackTriggerEnterExit(Actor actor, bool entered)
     {
+        if (knockedOut) return;
         if (entered && actor is Avatar avatar)
         {
-            //PlayPunchEffect();
+            PlayPunchEffect();
             Vector2 dir = this.gameObject.transform.position - actor.gameObject.transform.position;
             dir = dir.normalized;
             dir.y = 0;
@@ -46,7 +60,10 @@ public class Rat : Actor, INeedleDamageReceiver
             avatar.ReceivePunch(this, dir, m_punchKnockoutDuration);
         }
     }
-
+    private void PlayPunchEffect() 
+    {
+        m_animator.SetTrigger(attackAnim);     
+    }
     private void OnActionTriggerEnterExit(Actor actor, bool entered) 
     {
         if ((entered && actor is Avatar avatar))
@@ -72,11 +89,23 @@ public class Rat : Actor, INeedleDamageReceiver
     public void SewUp() 
     {
         if (knockedOut)
-        { 
-            
+        {
+            m_animator.SetTrigger(sewAnim);
+            float t = m_animator.GetCurrentAnimatorStateInfo(0).length;
+            while (t > 0)
+            {
+                t -= Time.deltaTime;
+                Debug.Log(t);
+            }
+            DisableRat();
+
         }
-        //set texture
-        //disable actor
+    }
+    private void DisableRat() 
+    {
+        m_attackTrigger.gameObject.SetActive(false);
+        m_actionTrigger.gameObject.SetActive(false);
+        m_animator.gameObject.SetActive(false);
     }
 
 
@@ -84,12 +113,14 @@ public class Rat : Actor, INeedleDamageReceiver
     {
         float t = ratKnockOutTime;
         knockedOut = true;
+        m_animator.SetBool(knockOutAnim,true);
         while (t > 0)
         {
             t -= Time.deltaTime;
             yield return null;
         }
         knockedOut = false;
+        m_animator.SetBool(knockOutAnim, false);
         knockOutTimerCoroutine = null;
     }
 
@@ -101,7 +132,9 @@ public class Rat : Actor, INeedleDamageReceiver
 
     void INeedleDamageReceiver.ReceiveNeedleDamage(Actor inflictor)
     {
-        if (knockOutTimerCoroutine == null) ;
+        if (knockOutTimerCoroutine == null)
             knockOutTimerCoroutine = StartCoroutine(KnockOutTimer());
+        
+        Debug.Log("rat hit");
     }
 }
