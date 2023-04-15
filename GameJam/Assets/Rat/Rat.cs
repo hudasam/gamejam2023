@@ -20,7 +20,7 @@ public class Rat : Actor, INeedleDamageReceiver
     [SerializeField] private Vector2 m_punchDeltaV;
     [SerializeField] private float m_punchKnockoutDuration = 2f;
     [SerializeField] private float ratKnockOutTime=1.5f;
-
+    bool active;
 
     private int attackAnim = Animator.StringToHash("Attack");
     private int knockOutAnim = Animator.StringToHash("knockedOut");
@@ -28,6 +28,7 @@ public class Rat : Actor, INeedleDamageReceiver
 
     private Coroutine knockOutTimerCoroutine;
 
+    [SerializeField] private int m_contextActionPrioriy;
     [SerializeField] private Animator m_animator;
 
     [SerializeField] private PlayerAction m_playerAction;
@@ -45,6 +46,7 @@ public class Rat : Actor, INeedleDamageReceiver
         m_attackTrigger.ActorEnterExit += OnAttackTriggerEnterExit;
         m_actionTrigger.ActorEnterExit += OnActionTriggerEnterExit;
         m_animator = GetComponent<Animator>();
+        active = true;
     }
 
     private void OnAttackTriggerEnterExit(Actor actor, bool entered)
@@ -66,15 +68,17 @@ public class Rat : Actor, INeedleDamageReceiver
     }
     private void OnActionTriggerEnterExit(Actor actor, bool entered) 
     {
-        if ((entered && actor is Avatar avatar))
+        
+        if (actor is Avatar avatar)
         {
             //Item check TODO
             if (entered)
             {
+                if (!active) return;
                 if (m_playerAction == null)
                     Debug.LogError($"{nameof(m_playerAction)} is null", gameObject);
-                var request = avatar.AvailableAction.CreateRequest(name, (int)Avatar.ActionPriority.Swing, (m_playerAction, transform), true);
-                m_actionRequests[avatar] = request;
+                var request = avatar.AvailableAction.CreateRequest(name, m_contextActionPrioriy, (m_playerAction, transform), true);
+                m_actionRequests.Add(avatar, request);
             }
             else
             {
@@ -86,26 +90,39 @@ public class Rat : Actor, INeedleDamageReceiver
         }
     }
 
-    public void SewUp() 
+    public bool SewUp() 
     {
+        if (!knockedOut) return false;
         if (knockedOut)
         {
+
+            active = false;
             m_animator.SetTrigger(sewAnim);
-            float t = m_animator.GetCurrentAnimatorStateInfo(0).length;
-            while (t > 0)
-            {
-                t -= Time.deltaTime;
-                Debug.Log(t);
-            }
-            DisableRat();
+
+            StartCoroutine(Timer());
+            
 
         }
+        return true;
+    }
+    IEnumerator Timer() 
+    {
+        float t = 2f;
+        while (t > 0)
+        {
+            t -= Time.deltaTime;
+            yield return null;
+        }
+        DisableRat();
     }
     private void DisableRat() 
     {
         m_attackTrigger.gameObject.SetActive(false);
-        m_actionTrigger.gameObject.SetActive(false);
-        m_animator.gameObject.SetActive(false);
+        //m_actionTrigger.gameObject.SetActive(false);
+        transform.Find("Sprite").gameObject.SetActive(false);
+        transform.Find("Collider").gameObject.SetActive(false);
+        transform.Find("Cover").gameObject.SetActive(true);
+
     }
 
 
@@ -135,6 +152,6 @@ public class Rat : Actor, INeedleDamageReceiver
         if (knockOutTimerCoroutine == null)
             knockOutTimerCoroutine = StartCoroutine(KnockOutTimer());
         
-        Debug.Log("rat hit");
+        //Debug.Log("rat hit");
     }
 }

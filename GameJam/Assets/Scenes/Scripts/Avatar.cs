@@ -210,12 +210,19 @@ public class Avatar : Actor
             case PlayerAction.ActionType.Use:
                 if (HasThread && HasNeedle)
                     if (AvailableAction.Value.transform.GetComponentInParent<Actor>() is Rat) 
-                    { 
-                        
+                    {
+                        Rat r =(Rat)AvailableAction.Value.transform.GetComponentInParent<Actor>();
+                        if(r.SewUp())
+                            ConsumeItems();
                     }
-                    ;
+                    
                 break;
         }
+    }
+    private void ConsumeItems()
+    {
+        //HasNeedle = false;
+        HasThread = false;
     }
 
     protected void Update()
