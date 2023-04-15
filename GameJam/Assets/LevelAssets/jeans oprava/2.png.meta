@@ -6,7 +6,7 @@ TextureImporter:
   serializedVersion: 12
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 0
+    enableMipMap: 1
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 2
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -52,7 +52,7 @@ TextureImporter:
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
-  spriteTessellationDetail: -1
+  spriteTessellationDetail: 0
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
@@ -72,7 +72,7 @@ TextureImporter:
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
-    crunchedCompression: 0
+    crunchedCompression: 1
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
@@ -116,11 +116,49 @@ TextureImporter:
   spriteSheet:
     serializedVersion: 2
     sprites: []
-    outline: []
-    physicsShape: []
+    outline:
+    - - {x: -1901.0743, y: 1736.9231}
+      - {x: -1934, y: 284}
+      - {x: -2808.545, y: -380}
+      - {x: -2805.4688, y: -1432.3077}
+      - {x: -2774.707, y: -1447.6924}
+      - {x: 2839.3066, y: -1447.6924}
+      - {x: 2839.3066, y: -81.53847}
+      - {x: 250, y: 870}
+      - {x: -367, y: 1777}
+    physicsShape:
+    - - {x: 2805.4688, y: -626.1539}
+      - {x: 2743.9453, y: -456.9231}
+      - {x: 2439.4043, y: -127.692314}
+      - {x: 1996.4357, y: 100}
+      - {x: 1642.6759, y: 213.84616}
+      - {x: 1110.498, y: 401.53848}
+      - {x: 609.08203, y: 490.76926}
+      - {x: 224.56056, y: 678.46155}
+      - {x: 0, y: 866.1539}
+      - {x: -174, y: 1135}
+      - {x: -276.85547, y: 1466.1539}
+      - {x: -332.22656, y: 1687.6924}
+      - {x: -381.44534, y: 1730.7693}
+      - {x: -1030.5176, y: 1730.7693}
+      - {x: -1741.1134, y: 1724.6155}
+      - {x: -1851, y: 1713}
+      - {x: -1814.9415, y: 1281.5385}
+      - {x: -1867.2365, y: 343.07693}
+      - {x: -2014.8927, y: -35.384617}
+      - {x: -2222, y: -241}
+      - {x: -2537.8418, y: -389.23077}
+      - {x: -2728.5645, y: -380}
+      - {x: -2802.3926, y: -460.00003}
+      - {x: -2802.3926, y: -1158.4615}
+      - {x: -2796.2402, y: -1426.1539}
+      - {x: -2756.25, y: -1444.6155}
+      - {x: 2827.002, y: -1444.6155}
+      - {x: 2833.1543, y: -1315.3846}
+      - {x: 2833.1543, y: -970.7693}
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 0
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []

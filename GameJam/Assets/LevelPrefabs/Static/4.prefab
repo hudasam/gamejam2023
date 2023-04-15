@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7458315253254959357
+--- !u!1 &7903001873032408771
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,40 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7458315253254959359}
-  - component: {fileID: 7458315253254959356}
-  - component: {fileID: 7458315253254959352}
-  - component: {fileID: 7458315253254959353}
-  - component: {fileID: 7458315253254959358}
-  m_Layer: 2
-  m_Name: JeansButton
+  - component: {fileID: 3450981163189264442}
+  - component: {fileID: 8290892830377046606}
+  - component: {fileID: 2618045509070776836}
+  m_Layer: 3
+  m_Name: 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
---- !u!4 &7458315253254959359
+--- !u!4 &3450981163189264442
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7458315253254959357}
+  m_GameObject: {fileID: 7903001873032408771}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.12, y: 4.61, z: 0.8567171}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &7458315253254959356
+--- !u!212 &8290892830377046606
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7458315253254959357}
+  m_GameObject: {fileID: 7903001873032408771}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -76,56 +74,55 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e96183381424b8a4c99fe612b7b19003, type: 3}
+  m_Sprite: {fileID: -870587441, guid: 4973034e4eb1f2e4dbfb58592e5975f6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 0.35, y: 0.32}
+  m_DrawMode: 1
+  m_Size: {x: 49.20201, y: 39.44}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &7458315253254959352
-CircleCollider2D:
+--- !u!60 &2618045509070776836
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7458315253254959357}
+  m_GameObject: {fileID: 7903001873032408771}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 3.5
---- !u!114 &7458315253254959353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7458315253254959357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5ce3f7f07ff2854e9ff07d759ce42cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7458315253254959358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7458315253254959357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5367476f84be6ec4eb384e215f7e2b2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_playerAction: {fileID: 11400000, guid: 26a5874058d1388489d27b9fe7e28586, type: 2}
-  m_priority: 0
+  m_SpriteTilingProperty:
+    border: {x: 5.5213475, y: 4.8, z: 4.5911207, w: 4.65}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 49.20201, y: 39.44}
+    newSize: {x: 49.20201, y: 39.44}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 1
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 22.107489, y: 19.72}
+      - {x: -17.03916, y: 19.72}
+      - {x: -21.500248, y: 19.5}
+      - {x: -23.630768, y: 19.15}
+      - {x: -24.570997, y: 17.97}
+      - {x: -24.569435, y: 16.347778}
+      - {x: -24.569435, y: -15.9339485}
+      - {x: -23.59076, y: -18.7}
+      - {x: -20.558445, y: -19.658463}
+      - {x: 22.322948, y: -19.658463}
+      - {x: 24.140894, y: -19.13}
+      - {x: 24.59979, y: -17.751844}
+      - {x: 24.599796, y: 11.726153}
+      - {x: 24.270926, y: 17.69}
+      - {x: 23.640772, y: 18.759998}
+      - {x: 22.880585, y: 19.529999}
