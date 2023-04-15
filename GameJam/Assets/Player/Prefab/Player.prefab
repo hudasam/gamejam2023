@@ -1472,7 +1472,7 @@ MonoBehaviour:
   m_maxAirSpeed: 4
   m_walkAcceleration: 6
   m_airAcceleration: 3
-  m_ropeAirAcceleration: 4
+  m_ropeAirAcceleration: 6
   m_maxRopeAirSpeed: 7
   m_jumpSpeed: 3
   m_jumpBoostAcceleration: 20
