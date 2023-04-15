@@ -14,10 +14,8 @@ using UnityEngine.Serialization;
 
 public class Avatar : Actor
 {
-    [SerializeField] private float m_groundProximity = 0.3f;
-    [SerializeField] private LayerMask m_groundMask;
     [SerializeField] private Collider2D[] m_colliders;
-    [SerializeField] private Collider2D m_grounder;
+    
     [SerializeField] private RopeScript m_ropePrefab;
     
     [Header("Movement")]
@@ -56,7 +54,7 @@ public class Avatar : Actor
     private bool m_jumpInNext;
     private bool m_jumpQueued;
     private float m_jumpFuel;
-    private readonly Collider2D[] m_colliderBuffer = new Collider2D[32];
+    
 
     private interface ITick : IStateBase { void Tick(float deltaTime); }
     private interface IUpdate : IStateBase { void Update(float deltaTime); }
@@ -127,7 +125,7 @@ public class Avatar : Actor
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 playerPos = transform.position;
         Vector2 targetDir = (mousePos - playerPos).normalized;
-        RaycastHit2D hit = Physics2D.Raycast(playerPos, targetDir, m_maxRopeDistance, m_groundMask);
+        RaycastHit2D hit = Physics2D.Raycast(playerPos, targetDir, m_maxRopeDistance, GlobalSettings.GetInstance().GroundMask);
         Debug.DrawRay(transform.position, targetDir, Color.green);
         
         if (hit.collider != null ) 
@@ -227,21 +225,6 @@ public class Avatar : Actor
     public MultiControl<PlayerAction> AvailableAction => m_availableAction;
     
     
-    public bool IsGrounded() => IsGrounded(out _);
-    
-    public bool IsGrounded(out Collider2D collider)
-    {
-        var filter = new ContactFilter2D()
-        {
-            layerMask = m_groundMask,
-            useLayerMask = true
-        };
-        var overlapCount = m_grounder.OverlapCollider(filter, m_colliderBuffer);
-
-        collider = overlapCount > 0 ? m_colliderBuffer[0] : null;
-        return overlapCount > 0;
-    }
-
     class State_Root : HierarchicalState<Avatar>, IState, IUpdate, IThrowRope
     {
         private readonly State_Walking m_state_walking = new();
@@ -390,5 +373,16 @@ public class Avatar : Actor
                 }
             }
         }
+    }
+    
+    public void ReceivePunch(Actor from, Vector2 velocity)
+    {
+        m_rigidbody.velocity = velocity;
+        PlayHitEffect();
+    }
+    
+    private void PlayHitEffect()
+    {
+        Debug.Log("Outch! TODO play hit anim", gameObject);
     }
 }
