@@ -34,6 +34,7 @@ public class Swing : MonoBehaviour
             }
             else
             {
+                Debug.Log("Left");
                 var request = m_actionRequests[avatar];
                 request.Dispose();
                 m_actionRequests.Remove(avatar);
