@@ -39,12 +39,9 @@ public class Avatar : Actor
 
     private StateMachine m_machine = new("Avatar", new State_Root());
     
-<<<<<<< HEAD
+
     private readonly MultiControl<(PlayerAction act,Transform transform)> m_availableAction = new();
-=======
-    private readonly MultiControl<PlayerAction> m_availableAction = new();
-    
->>>>>>> 3abfcaad88020f204c89d7d0fda4a742769e3bb4
+
     private Rigidbody2D m_rigidbody;
     private Animator m_animator;
 
@@ -287,17 +284,11 @@ public class Avatar : Actor
 
 
 
-<<<<<<< HEAD
     public MultiControl<(PlayerAction act,Transform transform)> AvailableAction => m_availableAction;
-    
-    
-    class State_Root : HierarchicalState<Avatar>, IState, IUpdate, IThrowRope
-=======
-    public MultiControl<PlayerAction> AvailableAction => m_availableAction;
+
     public HintUI Hints => m_hintsUI;
 
     class State_Root : HierarchicalState<Avatar>, IState, IUpdate, IThrowRope, IReceivePunch
->>>>>>> 3abfcaad88020f204c89d7d0fda4a742769e3bb4
     {
         private readonly State_Walking m_state_walking = new();
         private readonly State_Roped m_state_roped = new();

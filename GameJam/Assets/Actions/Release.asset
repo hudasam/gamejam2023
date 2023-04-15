@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Release
   m_EditorClassIdentifier: 
   m_description: Release
+  m_type: 1

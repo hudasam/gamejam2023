@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: SewHole
   m_EditorClassIdentifier: 
   m_description: Sew the hole
+  m_type: 2

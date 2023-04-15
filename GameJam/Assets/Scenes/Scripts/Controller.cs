@@ -69,17 +69,11 @@ public class Controller : SingletonBehaviour<Controller>
     {
         if(Avatar)
         {
-<<<<<<< HEAD
-            Avatar.NavigationInput = Input.GetAxisRaw("Horizontal");
-            Avatar.JumpInput.Value = Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W);
-            Avatar.RollInput.Value = Input.GetKey(KeyCode.LeftShift);
-            Avatar.ContextInput.Value = Input.GetKey(KeyCode.E);
-=======
+
             Avatar.NavigationInput = (Input.GetKey(m_leftButton) ? -1 : 0) + (Input.GetKey(m_rightButton) ? 1 : 0);
             Avatar.JumpInput.Value = Input.GetKey(m_jumpButton);
             Avatar.AttackInput.Value = Input.GetKey(m_attackButton);
             Avatar.ContextInput.Value = Input.GetKey(m_contextButton);
->>>>>>> 3abfcaad88020f204c89d7d0fda4a742769e3bb4
         }
     }
 }
