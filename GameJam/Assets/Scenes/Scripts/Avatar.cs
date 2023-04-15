@@ -125,8 +125,8 @@ public class Avatar : Actor
     public enum ActionPriority
     {
         Pickup = 0,
-        Swing = 1,
-        Release = 2
+        Sewing = 1,
+        Swing = 2
     }
 
     private void JumpInputChanged(bool pressed)
