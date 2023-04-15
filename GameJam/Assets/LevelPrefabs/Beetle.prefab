@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_grounder: {fileID: 7282833867790654707}
+  m_hitPoints: 3
   m_goingLeft: 0
   m_turnAroundCollisionMask:
     serializedVersion: 2
@@ -151,10 +152,12 @@ MonoBehaviour:
   m_flip: {fileID: 7282833868171373898}
   m_frontCollisionSensor: {fileID: 7282833869142988603}
   m_attackTrigger: {fileID: 7282833868788004053}
-  m_punchDeltaV: {x: -5, y: 3}
+  m_punchDeltaV: {x: 5, y: 3}
   m_punchKnockoutDuration: 1
   m_speed: 1
   m_acceleration: 50
+  m_deactivateOnDeath:
+  - {fileID: 7282833867730933676}
 --- !u!50 &7282833867903128595
 Rigidbody2D:
   serializedVersion: 4

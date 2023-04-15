@@ -33,6 +33,9 @@ public class Zone : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D col)
     {
+        if(col.isTrigger)
+            return;
+        
         var hitActor = col.GetComponentInParent<Actor>();
         if(!hitActor)
             return;
@@ -42,6 +45,9 @@ public class Zone : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D col)
     {
+        if(col.isTrigger)
+            return;
+
         var hitActor = col.GetComponentInParent<Actor>();
         if(!hitActor)
             return;
