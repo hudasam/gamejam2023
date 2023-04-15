@@ -8,8 +8,9 @@ using SeweralIdeas.UnityUtils;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
-public class Beetle : Actor
+public class Beetle : Actor, INeedleDamageReceiver
 {
+    [SerializeField] private int m_hitPoints = 3;
     [SerializeField] private bool m_goingLeft;
     [SerializeField] private LayerMask m_turnAroundCollisionMask;
     [SerializeField] private Transform m_flip;
@@ -19,6 +20,7 @@ public class Beetle : Actor
     [SerializeField] private Vector2 m_punchDeltaV;
     [SerializeField] private float m_punchKnockoutDuration = 2f;
 
+    private bool m_dead;
     private Animator m_animator;
     
     [Header("Movement")]
@@ -28,10 +30,12 @@ public class Beetle : Actor
 
     private static readonly AnimatorFloat m_walkSpeed = "WalkSpeed";
     private static readonly AnimatorTrigger m_attack = "Attack";
+    private static readonly AnimatorTrigger m_pain = "Pain";
     
     private bool m_alive = true;
     private Rigidbody2D m_rigidbody;
 
+    [SerializeField] private GameObject[] m_deactivateOnDeath;
 
     protected void Awake()
     {
@@ -42,16 +46,26 @@ public class Beetle : Actor
     
     private void OnAttackTriggerEnterExit(Actor actor, bool entered)
     {
+        if(m_dead)
+            return;
+
         if(entered && actor is Avatar avatar)
         {
             PlayPunchEffect();
-            avatar.ReceivePunch(this, m_punchDeltaV, m_punchKnockoutDuration);
+            var punchDeltaV = m_punchDeltaV;
+
+            if(actor.transform.position.x < transform.position.x)
+                punchDeltaV.x *= -1;
+            avatar.ReceivePunch(this, punchDeltaV, m_punchKnockoutDuration);
         }
     }
 
 
     protected void FixedUpdate()
     {
+        if(m_dead)
+            return;
+        
         if(IsGrounded())
         {
             float targetSpeed = m_goingLeft ? -m_speed : m_speed;
@@ -79,5 +93,30 @@ public class Beetle : Actor
     {
         m_animator.Trigger(m_attack);
         Debug.Log("TODO pum=nch effect animation", gameObject);
+    }
+    
+    public void ReceiveNeedleDamage(Actor inflictor)
+    {
+        if(m_dead)
+            return;
+        
+        m_hitPoints--;
+        if(m_hitPoints <= 0)
+        {
+            m_dead = true;
+            float horizontal = Mathf.Sign(transform.position.x - inflictor.transform.position.x) * 1f;
+            m_rigidbody.velocity = new Vector2(horizontal, 5);
+            m_flip.transform.localRotation = Quaternion.Euler(180f, m_goingLeft? 180:0, 0f);
+            foreach (var obj in m_deactivateOnDeath)
+            {
+                obj.SetActive(false);
+            }
+            gameObject.AddComponent<MaxLifetime>().TimeLeft = 3f;
+        }
+        else
+        {
+            // pain
+            m_animator.Trigger(m_pain);
+        }
     }
 }

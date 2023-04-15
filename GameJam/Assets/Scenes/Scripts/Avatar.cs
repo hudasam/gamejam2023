@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using SeweralIdeas.Pooling;
 using SeweralIdeas.StateMachines;
 using SeweralIdeas.UnityUtils;
 using SeweralIdeas.Utils;
@@ -36,10 +37,14 @@ public class Avatar : Actor
     [SerializeField] private PhysicsMaterial2D m_walkMaterial;
     [SerializeField] private Transform m_dontRoll;
     [SerializeField] private HintUI m_hintsUI;
-
-    private StateMachine m_machine = new("Avatar", new State_Root());
+    [SerializeField] private Collider2D m_attackArea;
     
+    private StateMachine m_machine = new("Avatar", new State_Root());
 
+
+    [SerializeField] private PlayerHint m_needleHint;
+    [SerializeField] private PlayerHint m_threadHint;
+    
     private readonly MultiControl<(PlayerAction act,Transform transform)> m_availableAction = new();
 
     private Rigidbody2D m_rigidbody;
@@ -60,6 +65,7 @@ public class Avatar : Actor
     private static readonly AnimatorBool s_idHasNeedle = "HasNeedle";
     private static readonly AnimatorBool s_idHasThread = "HasThread";
     private static readonly AnimatorTrigger s_idJump = "Jump";
+    private static readonly AnimatorTrigger s_idAttack = "Attack";
 
     private bool m_jumpInNext;
     private bool m_jumpQueued;
@@ -70,17 +76,26 @@ public class Avatar : Actor
     private interface IUpdate : IStateBase { void Update(float deltaTime); }
     private interface IThrowRope { void ThrowRope(Vector2 worldPosition); }
     private interface IReceivePunch { void ReceivePunch(Actor inflictor, Vector2 velocity, float knockoutDuration); }
+    private interface IAttack { void Attack(); }
 
     private static readonly Handler<IUpdate, float> msg_update = (handler, deltaTime) => { handler.state.PropagateMessage(); handler.Update(deltaTime); };
     private static readonly Handler<ITick, float> msg_tick = (handler, deltaTime) => { handler.state.PropagateMessage(); handler.Tick(deltaTime); };
     private static readonly Handler<IThrowRope, Vector2> msg_throwRope = (handler, worldPosition) => { handler.ThrowRope(worldPosition); };
     private static readonly Handler<IReceivePunch, (Actor inflictor, Vector2 velocity, float knockoutDuration)> msg_receivePunch = (handler, args) => { handler.ReceivePunch(args.inflictor, args.velocity, args.knockoutDuration); };
+    private static readonly Handler<IAttack> msg_attack = (handler) => handler.Attack();
+    [SerializeField]
+    private double m_attackCooldown = 0.25f;
 
     protected void Awake()
     {
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
         JumpInput.Changed += JumpInputChanged;
+        
+        AttackInput.Changed += (bool isOn) =>
+        {
+            if(isOn) m_machine.SendMessage(msg_attack);
+        };
         
         HasNeedle = false;
         HasThread = false;
@@ -96,6 +111,11 @@ public class Avatar : Actor
         {
             m_hasThread = value;
             m_animator.SetValue(s_idHasThread, value);
+            if(m_hasThread)
+                m_hintsUI.MaskHint(m_threadHint);
+            else 
+                m_hintsUI.UnmaskHint(m_threadHint);
+            
         }
     }
     
@@ -106,6 +126,10 @@ public class Avatar : Actor
         {
             m_hasNeedle = value;
             m_animator.SetValue(s_idHasNeedle, value);
+            if(m_hasNeedle)
+                m_hintsUI.MaskHint(m_needleHint);
+            else 
+                m_hintsUI.UnmaskHint(m_needleHint);
         }
     }
 
@@ -162,14 +186,14 @@ public class Avatar : Actor
 
     private void HandleAction()
     {
-        if(m_availableAction.Value.act == null)
+        if(AvailableAction.Value.act == null)
             return;
         
-        switch (m_availableAction.Value.act.Type)
+        switch (AvailableAction.Value.act.Type)
         {
             case PlayerAction.ActionType.Swing:
                 Debug.Log("Send rope");
-                m_machine.SendMessage(msg_throwRope, m_availableAction.Value.transform.position);
+                m_machine.SendMessage(msg_throwRope, AvailableAction.Value.transform.position);
                 break;
         }
     }
@@ -291,12 +315,13 @@ public class Avatar : Actor
 
     public HintUI Hints => m_hintsUI;
 
-    class State_Root : HierarchicalState<Avatar>, IState, IUpdate, IThrowRope, IReceivePunch
+    class State_Root : HierarchicalState<Avatar>, IState, IUpdate, IThrowRope, IReceivePunch, IAttack
     {
         private readonly State_Walking m_state_walking = new();
         private readonly State_Roped m_state_roped = new();
         private readonly State_KnockedOut m_state_knockedOut = new();
-        
+
+        private float m_lastAttackTime;
         private float m_flipRotation;
         
         void IThrowRope.ThrowRope(Vector2 worldPos) => TransitTo(m_state_roped, worldPos);
@@ -316,6 +341,17 @@ public class Avatar : Actor
             var flipTarget = actor.m_orientation > 0f ? 0f : 180f;
             m_flipRotation = Mathf.MoveTowards(m_flipRotation, flipTarget, 720f * deltaTime);
             actor.m_flip.transform.localRotation = Quaternion.Euler(0f, m_flipRotation, 0f);
+        }
+        
+        void IAttack.Attack()
+        {
+            if(actor.HasNeedle && (Time.time - m_lastAttackTime) > actor.m_attackCooldown)
+            {
+                m_lastAttackTime = Time.time;
+                actor.m_animator.Trigger(s_idAttack);
+                
+                actor.Invoke(nameof(ApplyAttackDamage), 0.25f);
+            }
         }
         
         class State_Walking : SimpleState<Avatar, State_Root>, IState, ITick, IUpdate
@@ -409,7 +445,7 @@ public class Avatar : Actor
             }
         }
         
-        class State_KnockedOut : SimpleState<Avatar, State_Root>, IState<float>, ITick
+        class State_KnockedOut : SimpleState<Avatar, State_Root>, IState<float>, ITick , IAttack
         {
             private float m_timeleft;
             
@@ -449,6 +485,10 @@ public class Avatar : Actor
                     TransitTo(parent.m_state_walking);
                 }
             }
+            
+            void IAttack.Attack()
+            {
+            }
         }
         void IReceivePunch.ReceivePunch(Actor inflictor, Vector2 velocity, float knockoutDuration)
         {
@@ -467,4 +507,18 @@ public class Avatar : Actor
     {
         Debug.Log("Outch! TODO play hit anim", gameObject);
     }
+    
+    private void ApplyAttackDamage()
+    {
+        using (HashSetPool<Actor>.Get(out var result))
+        {
+            ColliderOverlapActors(m_attackArea, new ContactFilter2D(), result);
+            foreach (var hitActor in result)
+            {
+                if(hitActor is INeedleDamageReceiver receiver)
+                    receiver.ReceiveNeedleDamage(this);
+            }
+        }
+    }
+
 }

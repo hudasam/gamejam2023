@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: NeedsNeedle
   m_EditorClassIdentifier: 
   m_description: I need a needle
-  m_icon: {fileID: 21300000, guid: d8c83ca8123cb7742a26c89968759d2c, type: 3}
+  m_icon: {fileID: 21300000, guid: b0dc71c619ad67f418aebef0b7c9921a, type: 3}
