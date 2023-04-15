@@ -45,6 +45,7 @@ public class Avatar : Actor
     [NonSerialized] public float NavigationInput;
     public readonly Reactive<bool> JumpInput = new();
     public readonly Reactive<bool> RollInput = new();
+    public readonly Reactive<bool> ContextInput = new();
 
     private static readonly AnimatorFloat s_idGoingDirection = "GoingDirection";
     private static readonly AnimatorFloat s_idWalkSpeed = "WalkSpeed";
@@ -70,6 +71,7 @@ public class Avatar : Actor
         m_animator = GetComponent<Animator>();
         JumpInput.Changed += JumpInputChanged;
         m_machine.Initialize(this);
+        ContextInput.Changed += ContextInputChanged;
     }
 
     protected override void OnDestroy()
@@ -110,6 +112,22 @@ public class Avatar : Actor
             m_jumpQueued = false;
             m_jumpFuel = 0f;
         }
+    }
+
+    private void ContextInputChanged(bool pressed) 
+    {
+        if(pressed)
+        {
+            if (AvailableAction != null) 
+            {
+                HandleAction();
+            }
+        }
+    }
+
+    private void HandleAction() 
+    {
+        //to do based on available action
     }
 
     protected void Update()
@@ -222,6 +240,7 @@ public class Avatar : Actor
         velocity.y += m_jumpSpeed;
         m_rigidbody.velocity = velocity;
     }
+
 
 
     public MultiControl<PlayerAction> AvailableAction => m_availableAction;

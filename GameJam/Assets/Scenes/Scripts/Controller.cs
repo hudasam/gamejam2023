@@ -64,6 +64,7 @@ public class Controller : MonoBehaviour
             Avatar.NavigationInput = Input.GetAxisRaw("Horizontal");
             Avatar.JumpInput.Value = Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W);
             Avatar.RollInput.Value = Input.GetKey(KeyCode.LeftShift);
+            Avatar.ContextInput.Value = Input.GetKey(KeyCode.E); //subject to change
         }
     }
 }
