@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 6425960877225222938}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.015, y: 0.015, z: 0.015}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6425960877914034805}
@@ -136,7 +136,7 @@ MonoBehaviour:
   m_grounder: {fileID: 0}
   m_hivRadius: 1
   m_moveSpeed: 1
-  m_stopDurationInterval: {x: 0.24128099, y: 0.59223485}
+  m_stopDurationInterval: {x: 0.4324399, y: 3.865831}
   m_moveDurationInterval: {x: 0.5472694, y: 0.8324198}
   m_flightSpeed: 4
   m_flightAngVelocityRange: {x: -720, y: 720}

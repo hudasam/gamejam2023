@@ -161,15 +161,19 @@ TextureImporter:
       name: 4_1
       rect:
         serializedVersion: 2
-        x: 1453
+        x: 1457
         y: 3727
         width: 3398
         height: 464
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -1699, y: 225.46124}
+        - {x: -1699, y: -232}
+        - {x: 1699, y: -232}
+        - {x: 1699, y: 231.6151}
       tessellationDetail: 0
       bones: []
       spriteID: 87948041c8400ad44a65e3921e83426c
