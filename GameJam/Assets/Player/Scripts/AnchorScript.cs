@@ -52,6 +52,17 @@ public class AnchorScript : MonoBehaviour
         }
     }
 
+    void ThrowAnchor(Vector2 anchorDest, out GameObject rope) {
+        if (checkLineOfSight(anchorDest))
+        {
+            rope = (GameObject)Instantiate(anchor, transform.position, Quaternion.identity);
+            RopeScript rs = rope.GetComponent<RopeScript>();
+            rs.anchorDest = anchorDest;
+        }
+        else
+            rope = null;
+    }
+
     bool getDestination(out Vector2 anchorDest) 
     {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -65,6 +76,17 @@ public class AnchorScript : MonoBehaviour
         }
         anchorDest = Vector2.zero;
         return false;
+    }
+    bool checkLineOfSight(Vector2 dest) {
+        Vector2 playerPos = transform.position;
+        Vector2 direction = (dest - playerPos).normalized;
+        RaycastHit2D hit = Physics2D.Raycast(playerPos, direction, maxDistance, GroundMask);
+        if (hit.collider != null)
+        {
+            return true;
+        }
+        return false;
+
     }
     public bool isRoped() {
         if (rope == null) return false;
