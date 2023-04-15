@@ -39,6 +39,7 @@ public class Avatar : Actor
     private StateMachine m_machine = new("Avatar", new State_Root());
     
     private readonly MultiControl<PlayerAction> m_availableAction = new();
+    private readonly MultiControl<PlayerHint> m_displayedHint = new();
     private Rigidbody2D m_rigidbody;
     private Animator m_animator;
 
@@ -47,9 +48,15 @@ public class Avatar : Actor
     public readonly Reactive<bool> AttackInput = new();
     public readonly Reactive<bool> ActionInput = new();
 
+    private bool m_hasNeedle = false;
+    private bool m_hasThread = false;
+
     private static readonly AnimatorFloat s_idGoingDirection = "GoingDirection";
     private static readonly AnimatorFloat s_idWalkSpeed = "WalkSpeed";
     private static readonly AnimatorBool s_idRolling = "Rolling";
+    private static readonly AnimatorBool s_idRoped = "Roped";
+    private static readonly AnimatorBool s_idHasNeedle = "HasNeedle";
+    private static readonly AnimatorBool s_idHasThread = "HasThread";
     private static readonly AnimatorTrigger s_idJump = "Jump";
 
     private bool m_jumpInNext;
@@ -72,7 +79,31 @@ public class Avatar : Actor
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
         JumpInput.Changed += JumpInputChanged;
+        
+        HasNeedle = false;
+        HasThread = false;
+        
         m_machine.Initialize(this);
+    }
+    
+    public bool HasThread
+    {
+        get => m_hasThread;
+        set
+        {
+            m_hasThread = value;
+            m_animator.SetValue(s_idHasThread, value);
+        }
+    }
+    
+    public bool HasNeedle
+    {
+        get => m_hasNeedle;
+        set
+        {
+            m_hasNeedle = value;
+            m_animator.SetValue(s_idHasNeedle, value);
+        }
     }
 
     protected override void OnDestroy()
@@ -226,6 +257,7 @@ public class Avatar : Actor
 
 
     public MultiControl<PlayerAction> AvailableAction => m_availableAction;
+    public MultiControl<PlayerHint> DisplayedHint => m_displayedHint;
     
     
     class State_Root : HierarchicalState<Avatar>, IState, IUpdate, IThrowRope, IReceivePunch
@@ -309,10 +341,12 @@ public class Avatar : Actor
                 base.OnEnter();
                 actor.m_rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
                 actor.SetPhysMaterial(actor.m_walkMaterial);
+                actor.m_animator.SetValue(s_idRoped, true);
             }
 
             protected override void OnExit()
             {
+                actor.m_animator.SetValue(s_idRoped, false);
                 if(m_rope)
                     Destroy(m_rope.gameObject);
                 base.OnExit();

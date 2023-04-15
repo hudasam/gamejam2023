@@ -3,12 +3,12 @@ using SeweralIdeas.Utils;
 using UnityEngine;
 
 [RequireComponent(typeof(Zone))]
-public class Pickup : MonoBehaviour
+public class HintZone : MonoBehaviour
 {
-    [SerializeField] private PlayerAction m_playerAction;
+    [SerializeField] private PlayerHint m_hint;
     
     private Zone m_zone;
-    private Dictionary<Avatar, MultiControl<PlayerAction>.Request> m_actionRequests = new();
+    private Dictionary<Avatar, MultiControl<PlayerHint>.Request> m_actionRequests = new();
 
 
     protected void Awake()
@@ -28,9 +28,9 @@ public class Pickup : MonoBehaviour
         {
             if(entered)
             {
-                if(m_playerAction == null)
-                    Debug.LogError($"{nameof(m_playerAction)} is null", gameObject);
-                var request = avatar.AvailableAction.CreateRequest(name, (int)Avatar.ActionPriority.Pickup, m_playerAction, true);
+                if(m_hint == null)
+                    Debug.LogError($"{nameof(m_hint)} is null", gameObject);
+                var request = avatar.DisplayedHint.CreateRequest(name, (int)Avatar.ActionPriority.Pickup, m_hint, true);
                 m_actionRequests[avatar] = request;
             }
             else

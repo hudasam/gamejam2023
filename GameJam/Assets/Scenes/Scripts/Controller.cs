@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using SeweralIdeas.UnityUtils;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Controller : MonoBehaviour
+public class Controller : SingletonBehaviour<Controller>
 {
     [SerializeField] private CameraController m_cameraController;
     [SerializeField] private Avatar m_avatar;
