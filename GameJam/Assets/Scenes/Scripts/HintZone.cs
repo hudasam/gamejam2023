@@ -8,8 +8,6 @@ public class HintZone : MonoBehaviour
     [SerializeField] private PlayerHint m_hint;
     
     private Zone m_zone;
-    private Dictionary<Avatar, MultiControl<PlayerHint>.Request> m_actionRequests = new();
-
 
     protected void Awake()
     {
@@ -28,16 +26,11 @@ public class HintZone : MonoBehaviour
         {
             if(entered)
             {
-                if(m_hint == null)
-                    Debug.LogError($"{nameof(m_hint)} is null", gameObject);
-                var request = avatar.DisplayedHint.CreateRequest(name, (int)Avatar.ActionPriority.Pickup, m_hint, true);
-                m_actionRequests[avatar] = request;
+                avatar.Hints.AddHint(m_hint);
             }
             else
             {
-                var request = m_actionRequests[avatar];
-                request.Dispose();
-                m_actionRequests.Remove(avatar);
+                avatar.Hints.RemoveHint(m_hint);
             }
         }
     }

@@ -35,11 +35,12 @@ public class Avatar : Actor
     [SerializeField] private PhysicsMaterial2D m_rollMaterial;
     [SerializeField] private PhysicsMaterial2D m_walkMaterial;
     [SerializeField] private Transform m_dontRoll;
+    [SerializeField] private HintUI m_hintsUI;
 
     private StateMachine m_machine = new("Avatar", new State_Root());
     
     private readonly MultiControl<PlayerAction> m_availableAction = new();
-    private readonly MultiControl<PlayerHint> m_displayedHint = new();
+    
     private Rigidbody2D m_rigidbody;
     private Animator m_animator;
 
@@ -73,7 +74,7 @@ public class Avatar : Actor
     private static readonly Handler<ITick, float> msg_tick = (handler, deltaTime) => { handler.state.PropagateMessage(); handler.Tick(deltaTime); };
     private static readonly Handler<IThrowRope, Vector2> msg_throwRope = (handler, worldPosition) => { handler.ThrowRope(worldPosition); };
     private static readonly Handler<IReceivePunch, (Actor inflictor, Vector2 velocity, float knockoutDuration)> msg_receivePunch = (handler, args) => { handler.ReceivePunch(args.inflictor, args.velocity, args.knockoutDuration); };
-    
+
     protected void Awake()
     {
         m_rigidbody = GetComponent<Rigidbody2D>();
@@ -277,9 +278,8 @@ public class Avatar : Actor
 
 
     public MultiControl<PlayerAction> AvailableAction => m_availableAction;
-    public MultiControl<PlayerHint> DisplayedHint => m_displayedHint;
-    
-    
+    public HintUI Hints => m_hintsUI;
+
     class State_Root : HierarchicalState<Avatar>, IState, IUpdate, IThrowRope, IReceivePunch
     {
         private readonly State_Walking m_state_walking = new();
