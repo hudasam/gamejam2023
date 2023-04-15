@@ -76,4 +76,9 @@ public class Controller : SingletonBehaviour<Controller>
             Avatar.ContextInput.Value = Input.GetKey(m_contextButton);
         }
     }
+    
+    public void CollectMoth(Moth moth)
+    {
+        throw new NotImplementedException();
+    }
 }
