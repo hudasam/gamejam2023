@@ -221,12 +221,6 @@ public class Avatar : Actor
     protected void Update()
     {
         m_machine.SendMessage(msg_update, Time.deltaTime);
-        //------------------------------------------- TODO: REMOVE -----------------------TEMPORARY------------------------------------------
-        if (Input.GetMouseButtonDown(0) && GetDestination(out var worldPos)) 
-        {
-            m_machine.SendMessage(msg_throwRope, worldPos);
-        }
-        //-----------------------------------------------------------------------------------------------------------------------------------
     }
     
     bool GetDestination(out Vector2 anchorDest) 
