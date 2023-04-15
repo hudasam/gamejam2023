@@ -74,6 +74,7 @@ public class Rat : Actor, INeedleDamageReceiver
             //Item check TODO
             if (entered)
             {
+                if (!avatar.HasThread || !avatar.HasNeedle) return;
                 if (!active) return;
                 if (m_playerAction == null)
                     Debug.LogError($"{nameof(m_playerAction)} is null", gameObject);
