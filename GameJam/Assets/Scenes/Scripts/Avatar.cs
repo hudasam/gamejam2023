@@ -39,8 +39,9 @@ public class Avatar : Actor
 
     private StateMachine m_machine = new("Avatar", new State_Root());
     
-    private readonly MultiControl<PlayerAction> m_availableAction = new();
-    
+
+    private readonly MultiControl<(PlayerAction act,Transform transform)> m_availableAction = new();
+
     private Rigidbody2D m_rigidbody;
     private Animator m_animator;
 
@@ -161,7 +162,13 @@ public class Avatar : Actor
 
     private void HandleAction() 
     {
-        //to do based on available action
+        switch (m_availableAction.Value.act.Type)
+        {
+            case PlayerAction.ActionType.Swing:
+                Debug.Log("Send rope");
+                m_machine.SendMessage(msg_throwRope, m_availableAction.Value.transform.position);
+                break;
+        }
     }
 
     protected void Update()
@@ -277,7 +284,8 @@ public class Avatar : Actor
 
 
 
-    public MultiControl<PlayerAction> AvailableAction => m_availableAction;
+    public MultiControl<(PlayerAction act,Transform transform)> AvailableAction => m_availableAction;
+
     public HintUI Hints => m_hintsUI;
 
     class State_Root : HierarchicalState<Avatar>, IState, IUpdate, IThrowRope, IReceivePunch
@@ -346,7 +354,7 @@ public class Avatar : Actor
             }
         }
         
-        class State_Roped : SimpleState<Avatar, State_Root>, IState<Vector2>, ITick, IUpdate
+        class State_Roped : SimpleState<Avatar, State_Root>, IState<Vector2>, ITick, IUpdate,IThrowRope
         {
             private RopeScript m_rope;
             
@@ -389,10 +397,12 @@ public class Avatar : Actor
 
             void IUpdate.Update(float deltaTime)
             {
-                if(Input.GetMouseButtonDown(1))
-                {
-                    TransitTo(parent.m_state_walking);
-                }
+        
+            }
+
+            void IThrowRope.ThrowRope(Vector2 worldPosition)
+            {
+                TransitTo(parent.m_state_walking);
             }
         }
         

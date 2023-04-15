@@ -36,8 +36,9 @@ public class Controller : SingletonBehaviour<Controller>
             {
                 m_avatar.AvailableAction.ValueChanged += OnAvatarActionChanged;
             }
-            
-            OnAvatarActionChanged(m_avatar ? m_avatar.AvailableAction.Value : null);
+
+            var t = m_avatar ? m_avatar.AvailableAction.Value : (null, null);
+            OnAvatarActionChanged(t);
             m_cameraController.SetTarget(m_avatar ? m_avatar.transform : null);
         }
     }
@@ -50,12 +51,12 @@ public class Controller : SingletonBehaviour<Controller>
         Avatar = avatar;
     }
     
-    private void OnAvatarActionChanged(PlayerAction obj)
+    private void OnAvatarActionChanged((PlayerAction obj,Transform transform) tup)
     {
-        if(obj != null)
+        if(tup.obj != null)
         {
             m_availableActionIndicator.gameObject.SetActive(true);
-            m_availableActionIndicator.text = obj.Description;
+            m_availableActionIndicator.text = tup.obj.Description;
         }
         else
         {
@@ -68,6 +69,7 @@ public class Controller : SingletonBehaviour<Controller>
     {
         if(Avatar)
         {
+
             Avatar.NavigationInput = (Input.GetKey(m_leftButton) ? -1 : 0) + (Input.GetKey(m_rightButton) ? 1 : 0);
             Avatar.JumpInput.Value = Input.GetKey(m_jumpButton);
             Avatar.AttackInput.Value = Input.GetKey(m_attackButton);

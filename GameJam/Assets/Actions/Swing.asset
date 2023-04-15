@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Swing
   m_EditorClassIdentifier: 
   m_description: Swing
+  m_type: 1
