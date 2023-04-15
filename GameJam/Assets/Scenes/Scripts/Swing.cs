@@ -7,7 +7,7 @@ public class Swing : MonoBehaviour
     [SerializeField] private PlayerAction m_playerAction;
     private Zone m_zone;
     private Dictionary<Avatar, MultiControl<(PlayerAction,Transform)>.Request> m_actionRequests = new();
-
+    [SerializeField] private int m_priority;
 
 
     // Start is called before the first frame update
@@ -29,7 +29,7 @@ public class Swing : MonoBehaviour
             {
                 if (m_playerAction == null)
                     Debug.LogError($"{nameof(m_playerAction)} is null", gameObject);
-                var request = avatar.AvailableAction.CreateRequest(name, (int)Avatar.ActionPriority.Swing, (m_playerAction,transform), true);
+                var request = avatar.AvailableAction.CreateRequest(name, m_priority, (m_playerAction,transform), true);
                 m_actionRequests[avatar] = request;
             }
             else
