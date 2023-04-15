@@ -126,7 +126,7 @@ public class Avatar : Actor
         {
             m_hasNeedle = value;
             m_animator.SetValue(s_idHasNeedle, value);
-            if(m_hasThread)
+            if(m_hasNeedle)
                 m_hintsUI.MaskHint(m_needleHint);
             else 
                 m_hintsUI.UnmaskHint(m_needleHint);
@@ -186,14 +186,14 @@ public class Avatar : Actor
 
     private void HandleAction()
     {
-        if(m_availableAction.Value.act == null)
+        if(AvailableAction.Value.act == null)
             return;
         
-        switch (m_availableAction.Value.act.Type)
+        switch (AvailableAction.Value.act.Type)
         {
             case PlayerAction.ActionType.Swing:
                 Debug.Log("Send rope");
-                m_machine.SendMessage(msg_throwRope, m_availableAction.Value.transform.position);
+                m_machine.SendMessage(msg_throwRope, AvailableAction.Value.transform.position);
                 break;
         }
     }
