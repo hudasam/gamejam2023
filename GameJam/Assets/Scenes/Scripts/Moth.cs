@@ -7,6 +7,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
 public class Moth : Actor
 {
     [SerializeField] private float m_hivRadius = 2f;
@@ -25,9 +26,14 @@ public class Moth : Actor
     private Avatar m_collector;
     private float m_flightAngularVelocity;
     private float m_flightChangeInterval;
+    private Animator m_animator;
+
+    private AnimatorBool m_walking = "Walk";
+    private AnimatorBool m_flying = "Fly";
 
     private void Awake()
     {
+        m_animator = GetComponent<Animator>();
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_destination = m_rigidbody.position;
     }
@@ -63,6 +69,7 @@ public class Moth : Actor
         m_collector = avatar;
         m_moveDuration = 0;
         gameObject.AddComponent<MaxLifetime>().TimeLeft = 5f;
+        m_animator.SetValue(m_flying, true);
     }
 
     private void FixedUpdate()
@@ -101,6 +108,7 @@ public class Moth : Actor
             }
 
             m_rigidbody.position = Vector2.MoveTowards(m_rigidbody.position, m_destination, Time.fixedDeltaTime * m_moveSpeed);
+            m_animator.SetValue(m_walking, true);
         }
         else
         {
@@ -109,6 +117,7 @@ public class Moth : Actor
             {
                 m_moveDuration = Random.Range(m_moveDurationInterval.x, m_moveDurationInterval.y);
             }
+            m_animator.SetValue(m_walking, false);
         }
     }
     private Vector2 GetRandomPoint()
