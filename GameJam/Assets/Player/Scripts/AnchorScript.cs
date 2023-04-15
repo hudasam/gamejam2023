@@ -9,12 +9,14 @@ public class AnchorScript : MonoBehaviour
 
     [SerializeField] GameObject anchor;
 
-    public GameObject rope;
+    GameObject rope;
     private bool roped;
     private void Awake()
     {
         GroundMask = LayerMask.GetMask("Ground");
         rope = null;
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("NoPlayerCollision"), LayerMask.NameToLayer("Player"));
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("NoPlayerCollision"), LayerMask.NameToLayer("NoPlayerCollision"));
     }
     // Start is called before the first frame update
     void Start()
