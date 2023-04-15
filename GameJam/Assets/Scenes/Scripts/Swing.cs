@@ -30,7 +30,7 @@ public class Swing : MonoBehaviour
                 if (m_playerAction == null)
                     Debug.LogError($"{nameof(m_playerAction)} is null", gameObject);
                 var request = avatar.AvailableAction.CreateRequest(name, m_priority, (m_playerAction,transform), true);
-                m_actionRequests[avatar] = request;
+                m_actionRequests.Add(avatar, request);
             }
             else
             {
