@@ -46,7 +46,7 @@ public class Avatar : Actor
     [NonSerialized] public float NavigationInput;
     public readonly Reactive<bool> JumpInput = new();
     public readonly Reactive<bool> AttackInput = new();
-    public readonly Reactive<bool> ActionInput = new();
+    public readonly Reactive<bool> ContextInput = new();
 
     private bool m_hasNeedle = false;
     private bool m_hasThread = false;
@@ -84,6 +84,7 @@ public class Avatar : Actor
         HasThread = false;
         
         m_machine.Initialize(this);
+        ContextInput.Changed += ContextInputChanged;
     }
     
     public bool HasThread
@@ -144,6 +145,22 @@ public class Avatar : Actor
             m_jumpQueued = false;
             m_jumpFuel = 0f;
         }
+    }
+
+    private void ContextInputChanged(bool pressed) 
+    {
+        if(pressed)
+        {
+            if (AvailableAction != null) 
+            {
+                HandleAction();
+            }
+        }
+    }
+
+    private void HandleAction() 
+    {
+        //to do based on available action
     }
 
     protected void Update()
@@ -256,6 +273,7 @@ public class Avatar : Actor
         velocity.y += m_jumpSpeed;
         m_rigidbody.velocity = velocity;
     }
+
 
 
     public MultiControl<PlayerAction> AvailableAction => m_availableAction;
