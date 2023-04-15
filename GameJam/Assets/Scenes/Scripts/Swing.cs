@@ -8,11 +8,13 @@ public class Swing : MonoBehaviour
     private Zone m_zone;
     private Dictionary<Avatar, MultiControl<(PlayerAction,Transform)>.Request> m_actionRequests = new();
     [SerializeField] private int m_priority;
+    private SpriteRenderer highlight;
 
 
     // Start is called before the first frame update
     protected void Awake()
     {
+        highlight = transform.Find("highlight").GetComponentInChildren<SpriteRenderer>();
         m_zone = GetComponent<Zone>();
         m_zone.ActorEnterExit += OnActorEnterExit;
     }
@@ -27,6 +29,7 @@ public class Swing : MonoBehaviour
         {
             if (entered)
             {
+                highlight.enabled = true;
                 if (m_playerAction == null)
                     Debug.LogError($"{nameof(m_playerAction)} is null", gameObject);
                 var request = avatar.AvailableAction.CreateRequest(name, m_priority, (m_playerAction,transform), true);
@@ -34,7 +37,7 @@ public class Swing : MonoBehaviour
             }
             else
             {
-                
+                highlight.enabled = false;
                 var request = m_actionRequests[avatar];
                 request.Dispose();
                 m_actionRequests.Remove(avatar);
