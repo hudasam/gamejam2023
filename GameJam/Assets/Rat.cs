@@ -6,7 +6,7 @@ using SeweralIdeas.Pooling;
 using SeweralIdeas.UnityUtils;
 using SeweralIdeas.Utils;
 
-public class Rat : Actor
+public class Rat : Actor, INeedleDamageReceiver
 {
     [SerializeField] private Collider2D m_frontCollisionSensor;
     [SerializeField] private Zone m_attackTrigger;
@@ -14,9 +14,15 @@ public class Rat : Actor
 
     [SerializeField] private Vector2 m_punchDeltaV;
     [SerializeField] private float m_punchKnockoutDuration = 2f;
+    [SerializeField] private float ratKnockOutTime=1.5f;
+
+    private Coroutine knockOutTimerCoroutine;
 
     [SerializeField] private PlayerAction m_playerAction;
     private Dictionary<Avatar, MultiControl<(PlayerAction, Transform)>.Request> m_actionRequests = new();
+
+    private bool knockedOut;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -63,10 +69,39 @@ public class Rat : Actor
         }
     }
 
+    public void SewUp() 
+    {
+        if (knockedOut)
+        { 
+            
+        }
+        //set texture
+        //disable actor
+    }
+
+
+    private IEnumerator KnockOutTimer()
+    {
+        float t = ratKnockOutTime;
+        knockedOut = true;
+        while (t > 0)
+        {
+            t -= Time.deltaTime;
+            yield return null;
+        }
+        knockedOut = false;
+        knockOutTimerCoroutine = null;
+    }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    void INeedleDamageReceiver.ReceiveNeedleDamage(Actor inflictor)
+    {
+        if (knockOutTimerCoroutine == null) ;
+            knockOutTimerCoroutine = StartCoroutine(KnockOutTimer());
     }
 }
