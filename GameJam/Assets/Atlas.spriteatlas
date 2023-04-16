@@ -91,6 +91,7 @@ SpriteAtlas:
     - {fileID: 396999675, guid: 7febf162edc625d46bdaf337423d6c8b, type: 3}
     - {fileID: 21300000, guid: d8c83ca8123cb7742a26c89968759d2c, type: 3}
     - {fileID: 21300000, guid: b5bf46d5543e6e949811ac5dbb2295f0, type: 3}
+    - {fileID: 1267148342, guid: 7346554d2c6eb1b48933b0259bcce734, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -134,6 +135,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 0e79187b5b003ab4fad82366bd844cdc, type: 3}
   - {fileID: 21300000, guid: b469ddac737db584083658b297456949, type: 3}
   - {fileID: 21300000, guid: 93c4404de6c658347ba75f44dd657f6f, type: 3}
+  - {fileID: 1267148342, guid: 7346554d2c6eb1b48933b0259bcce734, type: 3}
   - {fileID: 21300000, guid: 63ceb2fde84ad144da8d392503d41e0b, type: 3}
   - {fileID: -870587441, guid: 4973034e4eb1f2e4dbfb58592e5975f6, type: 3}
   - {fileID: -2034804866, guid: 4973034e4eb1f2e4dbfb58592e5975f6, type: 3}
@@ -181,6 +183,7 @@ SpriteAtlas:
   - 3
   - gombik
   - au2
+  - 9_0
   - 2
   - 4_0
   - 4_1
