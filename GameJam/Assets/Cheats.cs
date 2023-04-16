@@ -20,15 +20,17 @@ public class Cheats : MonoBehaviour
     {
         var avatar = Controller.GetInstance().Avatar;
         #if UNITY_EDITOR
+        int index = -1;
         for( int i = (int)KeyCode.F1; i < (int)KeyCode.F15; ++i )
         {
-            if(i >= m_teleports.Length)
+            ++index;
+            if(index >= m_teleports.Length)
                 break;
             
             KeyCode key = (KeyCode)i;
             if(Input.GetKeyDown(key))
             {
-                var dest = m_teleports[i];
+                var dest = m_teleports[index];
                 if(dest != null)
                 {
                     // teleport to
@@ -57,6 +59,17 @@ public class Cheats : MonoBehaviour
             avatar.transform.position = m_save.m_quickSavePos;
             rb.velocity = m_save.m_quickSaveVel;
         }
+
+        if(Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            avatar.HasThread = true;
+        }
+        
+        if(Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            avatar.HasNeedle = true;
+        }
+        
         #endif
     }
     

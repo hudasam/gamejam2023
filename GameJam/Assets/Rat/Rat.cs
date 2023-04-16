@@ -59,7 +59,7 @@ public class Rat : Actor, INeedleDamageReceiver
             dir = dir.normalized;
             dir.y = 0;
             dir *= m_punchDeltaV;
-            avatar.ReceivePunch(this, dir, m_punchKnockoutDuration);
+            avatar.ReceivePunch(this, dir, m_punchKnockoutDuration, false);
         }
     }
     private void PlayPunchEffect() 

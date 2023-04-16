@@ -7,6 +7,7 @@ public class Catapult : MonoBehaviour
 {
     [SerializeField] private Vector2 m_velocity;
     [SerializeField] private float m_knockoutDuration;
+    [SerializeField] private bool m_addVelocity = false;
     
     private void OnTriggerEnter2D(Collider2D col)
     {
@@ -19,7 +20,7 @@ public class Catapult : MonoBehaviour
         
         if(avatar)
         {
-            avatar.ReceivePunch(null, velocity, m_knockoutDuration);
+            avatar.ReceivePunch(null, velocity, m_knockoutDuration, m_addVelocity);
             return;
         }
         
@@ -28,6 +29,9 @@ public class Catapult : MonoBehaviour
         if(!rb)
             return;
 
-        rb.velocity = velocity;
+        if(m_addVelocity)
+            rb.velocity += velocity;
+        else
+            rb.velocity = velocity;
     }
 }

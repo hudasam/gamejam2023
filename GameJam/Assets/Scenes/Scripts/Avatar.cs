@@ -77,13 +77,13 @@ public class Avatar : Actor
     private interface ITick : IStateBase { void Tick(float deltaTime); }
     private interface IUpdate : IStateBase { void Update(float deltaTime); }
     private interface IThrowRope { void ThrowRope(Vector2 worldPosition); }
-    private interface IReceivePunch { void ReceivePunch(Actor inflictor, Vector2 velocity, float knockoutDuration); }
+    private interface IReceivePunch { void ReceivePunch(Actor inflictor, Vector2 velocity, float knockoutDuration, bool addVelocity); }
     private interface IAttack { void Attack(); }
 
     private static readonly Handler<IUpdate, float> msg_update = (handler, deltaTime) => { handler.state.PropagateMessage(); handler.Update(deltaTime); };
     private static readonly Handler<ITick, float> msg_tick = (handler, deltaTime) => { handler.state.PropagateMessage(); handler.Tick(deltaTime); };
     private static readonly Handler<IThrowRope, Vector2> msg_throwRope = (handler, worldPosition) => { handler.ThrowRope(worldPosition); };
-    private static readonly Handler<IReceivePunch, (Actor inflictor, Vector2 velocity, float knockoutDuration)> msg_receivePunch = (handler, args) => { handler.ReceivePunch(args.inflictor, args.velocity, args.knockoutDuration); };
+    private static readonly Handler<IReceivePunch, (Actor inflictor, Vector2 velocity, float knockoutDuration, bool addVel)> msg_receivePunch = (handler, args) => { handler.ReceivePunch(args.inflictor, args.velocity, args.knockoutDuration, args.addVel); };
     private static readonly Handler<IAttack> msg_attack = (handler) => handler.Attack();
     
     [SerializeField]
@@ -264,7 +264,7 @@ public class Avatar : Actor
         m_machine.SendMessage(msg_tick, Time.fixedDeltaTime);
     }
 
-    private void HandleWalking(float maxSpeed, float walkAcceleration, float walkDecceleration, float maxAirSpeed, float airAcceleration)
+    private void HandleWalking(float maxSpeed, float walkAcceleration, float walkDecceleration, float maxAirSpeed, float airAcceleration, Vector2 airControlAxis)
     {
         if(IsGrounded())
         {
@@ -278,12 +278,20 @@ public class Avatar : Actor
         else
         {
             // air control
-            if(Mathf.Abs(NavigationInput) > 0.1f)
+            if(Mathf.Abs(NavigationInput) > 0.1f && airControlAxis != Vector2.zero)
             {
                 float targetVelocityX = NavigationInput * maxAirSpeed;
                 Vector2 velocity = m_rigidbody.velocity;
-                velocity.x = Mathf.MoveTowards(velocity.x, targetVelocityX, airAcceleration * Time.fixedDeltaTime);
+                
+                float speedAtDirection = Vector2.Dot(velocity, airControlAxis);
+                Vector2 perpendicular = new Vector2(airControlAxis.y, -airControlAxis.x);
+            
+                float perpendicularSpeed = Vector2.Dot(velocity, perpendicular);
+                speedAtDirection = Mathf.MoveTowards(speedAtDirection, targetVelocityX, airAcceleration * Time.fixedDeltaTime);
+
+                velocity = perpendicularSpeed * perpendicular + speedAtDirection * airControlAxis;
                 m_rigidbody.velocity = velocity;
+
             }
         }
     }
@@ -396,7 +404,7 @@ public class Avatar : Actor
             {
                 actor.m_rigidbody.rotation = Mathf.MoveTowardsAngle(actor.m_rigidbody.rotation, 0, Time.deltaTime * 360f);
 
-                actor.HandleWalking(actor.m_walkSpeed, actor.m_walkAcceleration, actor.m_walkDecceleration, actor.m_maxAirSpeed, actor.m_airAcceleration);
+                actor.HandleWalking(actor.m_walkSpeed, actor.m_walkAcceleration, actor.m_walkDecceleration, actor.m_maxAirSpeed, actor.m_airAcceleration, Vector2.right);
                 actor.HandleJumping();
             }
             
@@ -448,10 +456,19 @@ public class Avatar : Actor
 
             void ITick.Tick(float deltaTime)
             {
-                actor.HandleWalking(actor.m_walkSpeed, actor.m_walkAcceleration, actor.m_walkDecceleration, actor.m_maxRopeAirSpeed, actor.m_ropeAirAcceleration);
+                var airControlAxis = m_rope.GetRopeDirection(false);
+                airControlAxis = new Vector2(airControlAxis.y, -airControlAxis.x);
+                
+                actor.HandleWalking(actor.m_walkSpeed, 
+                    actor.m_walkAcceleration,
+                    actor.m_walkDecceleration, 
+                    actor.m_maxRopeAirSpeed,
+                    actor.m_ropeAirAcceleration, 
+                    airControlAxis);
+                
                 actor.HandleJumping();
 
-                var ropeDirection = m_rope.GetRopeDirection();
+                var ropeDirection = m_rope.GetRopeDirection(true);
                 float targetRotation = Mathf.Atan2(ropeDirection.y, ropeDirection.x) * Mathf.Rad2Deg - 90f;
                 actor.m_rigidbody.rotation = Mathf.MoveTowardsAngle(actor.m_rigidbody.rotation, targetRotation, Time.deltaTime * 360f);
                 
@@ -517,17 +534,21 @@ public class Avatar : Actor
             {
             }
         }
-        void IReceivePunch.ReceivePunch(Actor inflictor, Vector2 velocity, float knockoutDuration)
+        void IReceivePunch.ReceivePunch(Actor inflictor, Vector2 velocity, float knockoutDuration, bool addVelocity)
         {
-            actor.m_rigidbody.velocity = velocity;
+            if(addVelocity)
+                actor.m_rigidbody.velocity += velocity;
+            else
+                actor.m_rigidbody.velocity = velocity;
+            
             TransitTo(m_state_knockedOut, knockoutDuration);
             actor.PlayHitEffect();
         }
     }
     
-    public void ReceivePunch(Actor from, Vector2 velocity, float knockoutDuration)
+    public void ReceivePunch(Actor from, Vector2 velocity, float knockoutDuration, bool addVelocity)
     {
-        m_machine.SendMessage(msg_receivePunch, (from, velocity, knockoutDuration));
+        m_machine.SendMessage(msg_receivePunch, (from, velocity, knockoutDuration, addVelocity));
     }
     
     private void PlayHitEffect()

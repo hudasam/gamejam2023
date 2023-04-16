@@ -51,7 +51,7 @@ public class Beetle : Actor, INeedleDamageReceiver
 
             if(actor.transform.position.x < transform.position.x)
                 punchDeltaV.x *= -1;
-            avatar.ReceivePunch(this, punchDeltaV, m_punchKnockoutDuration);
+            avatar.ReceivePunch(this, punchDeltaV, m_punchKnockoutDuration, false);
         }
     }
 
