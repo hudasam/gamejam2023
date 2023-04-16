@@ -978,8 +978,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_introScene:
-    m_sceneAsset: {fileID: 102900000, guid: 9fc0d4010bbf28b4594072e72b8655ab, type: 3}
-    m_scenePath: Assets/Scenes/Level.unity
+    m_sceneAsset: {fileID: 102900000, guid: 36abfb0a816d3f3479a5847d69bd6d07, type: 3}
+    m_scenePath: Assets/Intro/Intro.unity
   m_quitButton: {fileID: 1929118405}
 --- !u!1 &1831908745
 GameObject:
