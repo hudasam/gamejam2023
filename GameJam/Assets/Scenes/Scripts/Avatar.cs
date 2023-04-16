@@ -46,6 +46,9 @@ public class Avatar : Actor
 
     [SerializeField] private PlayerHint m_needleHint;
     [SerializeField] private PlayerHint m_threadHint;
+    [SerializeField] private AudioSource m_fastMoveAudio;
+    private float m_fastMoveAudioVelocity;
+    [SerializeField] private Vector2 m_fastMoveAudioVelocityRange;
     
     private readonly MultiControl<(PlayerAction act,Transform transform)> m_availableAction = new();
 
@@ -92,6 +95,7 @@ public class Avatar : Actor
 
     protected void Awake()
     {
+        m_fastMoveAudio.volume = 0;
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
         JumpInput.Changed += JumpInputChanged;
@@ -233,6 +237,9 @@ public class Avatar : Actor
     protected void Update()
     {
         m_machine.SendMessage(msg_update, Time.deltaTime);
+
+        float targetVolume = Mathf.InverseLerp(m_fastMoveAudioVelocityRange.x, m_fastMoveAudioVelocityRange.y, m_rigidbody.velocity.magnitude);
+        m_fastMoveAudio.volume = Mathf.SmoothDamp(m_fastMoveAudio.volume, targetVolume, ref m_fastMoveAudioVelocity, 0.1f);
     }
     
     bool GetDestination(out Vector2 anchorDest) 

@@ -23,7 +23,7 @@ public class CameraController : MonoBehaviour
     }
     
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         Vector2 targetPos = (Vector2)m_target.position;
         if(m_targetRB && Mathf.Abs(m_targetRB.velocity.x) > m_xVelThreshold)

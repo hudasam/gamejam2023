@@ -78,7 +78,7 @@ public class Beetle : Actor, INeedleDamageReceiver
             m_animator.SetValue(m_walkSpeed, 0f);
         }
         
-        if(ColliderOverlapsSomething(m_frontCollisionSensor, out var hit))
+        if(ColliderOverlapsSomething(m_frontCollisionSensor, m_turnAroundCollisionMask, out var hit))
         {
             m_goingLeft = !m_goingLeft;
         }

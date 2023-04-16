@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using SeweralIdeas.ReplayableEffects;
 using UnityEngine;
 
 [RequireComponent(typeof(Zone))]
 public class Pickup : MonoBehaviour
 {
+    [SerializeField] private EffectPool m_collect;
     public enum PickupType
     {
         Needle,
@@ -50,13 +52,15 @@ public class Pickup : MonoBehaviour
         }
 
         m_collected = true;
+        
 
         PlayCollectEffect();
     }
     
     private void PlayCollectEffect()
     {
-        Debug.Log("Collect effect TODO");
+        if(m_collect)
+            m_collect.PlayEffect(transform);
         Destroy(gameObject);
     }
 }
