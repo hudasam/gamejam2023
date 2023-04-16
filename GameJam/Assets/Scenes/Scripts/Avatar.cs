@@ -354,8 +354,6 @@ public class Avatar : Actor
         m_rigidbody.velocity = velocity;
     }
 
-
-
     public MultiControl<(PlayerAction act,Transform transform)> AvailableAction => m_availableAction;
 
     public HintUI Hints => m_hintsUI;
@@ -401,6 +399,7 @@ public class Avatar : Actor
         
         class State_Walking : SimpleState<Avatar, State_Root>, IState, ITick, IUpdate
         {
+            private float m_walkVolumeVelocity;
             void IState.Enter() { }
             
             protected override void OnEnter()
@@ -413,7 +412,7 @@ public class Avatar : Actor
             void ITick.Tick(float deltaTime)
             {
                 actor.m_rigidbody.rotation = Mathf.MoveTowardsAngle(actor.m_rigidbody.rotation, 0, Time.deltaTime * 360f);
-
+                
                 actor.HandleWalking(actor.m_walkSpeed, actor.m_walkAcceleration, actor.m_walkDecceleration, actor.m_maxAirSpeed, actor.m_airAcceleration, Vector2.right);
                 actor.HandleJumping();
             }
@@ -421,9 +420,9 @@ public class Avatar : Actor
             void IUpdate.Update(float deltaTime)
             {
                 float playWalk = actor.IsGrounded() ? Mathf.Abs(actor.m_rigidbody.velocity.x) : 0f;
+                float targetVolume = Mathf.InverseLerp(0.5f, 1f,playWalk / actor.m_walkSpeed);
+                actor.m_walkSound.volume = Mathf.SmoothDamp(actor.m_walkSound.volume, targetVolume, ref m_walkVolumeVelocity, 0.1f);
                 actor.m_animator.SetValue(s_idWalkSpeed, playWalk);
-                actor.m_walkSound.volume = Mathf.InverseLerp(0.5f, 1f,playWalk / actor.m_walkSpeed);
-                
                 if(Mathf.Abs(actor.NavigationInput) > 0.01f)
                 {
                     actor.m_orientation = Mathf.Sign(actor.NavigationInput);

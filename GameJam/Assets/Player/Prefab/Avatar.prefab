@@ -2381,6 +2381,7 @@ MonoBehaviour:
   m_needleHint: {fileID: 11400000, guid: 2f9fa8b381a6ac54eb3685d69ebad8c3, type: 2}
   m_threadHint: {fileID: 11400000, guid: 3be3a957c26218c48a56efe8241cc151, type: 2}
   m_fastMoveAudio: {fileID: 1763613391}
+  m_jumpAudio: {fileID: 0}
   m_fastMoveAudioVelocityRange: {x: 8, y: 20}
   m_attackCooldown: 0.25
 --- !u!50 &4404603240819110063
@@ -2434,7 +2435,7 @@ AudioSource:
   m_GameObject: {fileID: 4404603240819110064}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 6564549602398973210, guid: 93c35ea0c6a550242888774f93566b28, type: 2}
+  OutputAudioMixerGroup: {fileID: -2823970954118528484, guid: 93c35ea0c6a550242888774f93566b28, type: 2}
   m_audioClip: {fileID: 8300000, guid: c222aa88708cd484399ead4a221445c5, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1

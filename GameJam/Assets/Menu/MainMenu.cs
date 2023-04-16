@@ -17,7 +17,6 @@ public class MainMenu : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene(m_introScene.Path);
-        m_quitButton.interactable = CanQuit();
     }
     
     [Preserve]
@@ -38,6 +37,6 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        
+        m_quitButton.interactable = CanQuit();
     }
 }

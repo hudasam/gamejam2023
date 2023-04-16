@@ -38,7 +38,7 @@ SpriteAtlas:
       padding: 8
       blockOffset: 1
       allowAlphaSplitting: 0
-      enableRotation: 1
+      enableRotation: 0
       enableTightPacking: 1
       enableAlphaDilation: 0
     secondaryTextureSettings: {}
@@ -92,6 +92,7 @@ SpriteAtlas:
     - {fileID: 21300000, guid: d8c83ca8123cb7742a26c89968759d2c, type: 3}
     - {fileID: 21300000, guid: b5bf46d5543e6e949811ac5dbb2295f0, type: 3}
     - {fileID: 1267148342, guid: 7346554d2c6eb1b48933b0259bcce734, type: 3}
+    - {fileID: 21300000, guid: 7b40e53a58945784b943158a955d75af, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -128,6 +129,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: f7540569b256b2045b154d62803cd34e, type: 3}
   - {fileID: 21300000, guid: f38b01b94efec8846b58f2b2006ee76f, type: 3}
   - {fileID: 21300000, guid: b2a5cac9e633ddc418d6e07de25e1ff1, type: 3}
+  - {fileID: 21300000, guid: 7b40e53a58945784b943158a955d75af, type: 3}
   - {fileID: 21300000, guid: 60e9b39a852b2344799787d81087bdff, type: 3}
   - {fileID: 21300000, guid: 22866aba9b570f04bbf3e06ca7597370, type: 3}
   - {fileID: 21300000, guid: 0e3e6fbaf9f66dc428dc8ab05a58fdc8, type: 3}
@@ -176,6 +178,7 @@ SpriteAtlas:
   - 6
   - 7
   - 3
+  - nitka oprava
   - diera
   - dieraZasita
   - Eyes
