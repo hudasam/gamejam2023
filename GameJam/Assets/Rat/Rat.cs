@@ -75,7 +75,7 @@ public class Rat : Actor, INeedleDamageReceiver
         if (actor is Avatar avatar)
         {
             //Item check TODO
-            if (!avatar.HasThread || !avatar.HasNeedle) return;
+            
             if (entered)
             {
                 
