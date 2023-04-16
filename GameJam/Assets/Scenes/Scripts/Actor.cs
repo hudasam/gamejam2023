@@ -22,13 +22,13 @@ public class Actor : MonoBehaviour
     
     protected bool IsGrounded() => IsGrounded(out _);
 
-    protected bool IsGrounded(out Collider2D collider) => ColliderOverlapsSomething(m_grounder, out collider);
+    protected bool IsGrounded(out Collider2D collider) => ColliderOverlapsSomething(m_grounder, GlobalSettings.GetInstance().GroundMask, out collider);
     
-    protected bool ColliderOverlapsSomething(Collider2D sensor, out Collider2D collider)
+    protected bool ColliderOverlapsSomething(Collider2D sensor, LayerMask layerMask, out Collider2D collider)
     {
         var filter = new ContactFilter2D()
         {
-            layerMask = GlobalSettings.GetInstance().GroundMask,
+            layerMask = layerMask,
             useLayerMask = true
         };
 

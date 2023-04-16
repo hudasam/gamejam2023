@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using SeweralIdeas.ReplayableEffects;
 using SeweralIdeas.UnityUtils;
 using SeweralIdeas.UnityUtils.Drawers;
 using UnityEngine;
@@ -11,7 +12,7 @@ using Random = UnityEngine.Random;
 public class Moth : Actor
 {
     [SerializeField] private float m_hivRadius = 2f;
-
+    [SerializeField] private EffectPool m_collect;
     [SerializeField] private float m_moveSpeed;
     [SerializeField, MinMaxSlider(0f, 5f)] private Vector2 m_stopDurationInterval;
     [SerializeField, MinMaxSlider(0f, 5f)] private Vector2 m_moveDurationInterval;
@@ -66,10 +67,13 @@ public class Moth : Actor
         if(!(actor is Avatar avatar))
             return;
         
+        // collect
+        m_collect.PlayEffect(transform);
         m_collector = avatar;
         m_moveDuration = 0;
-        gameObject.AddComponent<MaxLifetime>().TimeLeft = 5f;
+        gameObject.AddComponent<MaxLifetime>().TimeLeft = 152f;
         m_animator.SetValue(m_flying, true);
+        Controller.GetInstance().AddMoth();
     }
 
     private void FixedUpdate()

@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 7458315253254959352}
   - component: {fileID: 7458315253254959353}
   - component: {fileID: 7458315253254959358}
+  - component: {fileID: 7218206199300680370}
   m_Layer: 2
   m_Name: RopeRivet
   m_TagString: Untagged
@@ -214,3 +215,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_playerAction: {fileID: 11400000, guid: 26a5874058d1388489d27b9fe7e28586, type: 2}
   m_priority: 0
+--- !u!60 &7218206199300680370
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7458315253254959357}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.35, y: 0.32}
+    newSize: {x: 0.35, y: 0.32}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.23572111, y: 4.740224}
+      - {x: -3.5121841, y: 3.2549887}
+      - {x: -4.72686, y: 0.13458729}
+      - {x: -3.547589, y: -3.1005855}
+      - {x: 0.067218065, y: -4.6637917}
+      - {x: 3.2938812, y: -3.2719898}
+      - {x: 4.7660646, y: 0.43316376}
+      - {x: 2.9847937, y: 3.6058674}

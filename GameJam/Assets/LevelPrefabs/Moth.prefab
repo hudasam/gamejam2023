@@ -135,6 +135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_grounder: {fileID: 0}
   m_hivRadius: 1
+  m_collect: {fileID: 11400000, guid: d460bdc34f26d164ba608c01b64c45bf, type: 2}
   m_moveSpeed: 1
   m_stopDurationInterval: {x: 0.4324399, y: 3.865831}
   m_moveDurationInterval: {x: 0.5472694, y: 0.8324198}

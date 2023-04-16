@@ -15,12 +15,13 @@ public class RopeScript : MonoBehaviour
     private List<Transform> nodePositions = new List<Transform>();
     private LineRenderer lineRenderer;
 
-    public Vector2 GetRopeDirection()
+    public Vector2 GetRopeDirection(bool endPoint)
     {
         if(nodePositions.Count < 2)
             return Vector2.zero;
 
-        return nodePositions[^2].position.xy() - nodePositions[^1].position.xy();
+        var firstIndex = endPoint ? ^2 : 0;
+        return (nodePositions[firstIndex].position.xy() - nodePositions[^1].position.xy()).normalized;
     }
 
     private void Awake()
