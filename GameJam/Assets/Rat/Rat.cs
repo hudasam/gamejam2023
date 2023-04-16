@@ -53,6 +53,7 @@ public class Rat : Actor, INeedleDamageReceiver
         soundSrc = GetComponent<AudioSource>();
         sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
         sprite.enabled = false;
+        m_animator.enabled = false;
     }
 
     private void OnAttackTriggerEnterExit(Actor actor, bool entered)
