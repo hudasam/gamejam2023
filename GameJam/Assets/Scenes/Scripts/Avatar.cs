@@ -48,6 +48,7 @@ public class Avatar : Actor
     [SerializeField] private PlayerHint m_needleHint;
     [SerializeField] private PlayerHint m_threadHint;
     [SerializeField] private AudioSource m_fastMoveAudio;
+    [SerializeField] private AudioSource m_jumpAudio;
     private float m_fastMoveAudioVelocity;
     [SerializeField] private Vector2 m_fastMoveAudioVelocityRange;
     
@@ -345,7 +346,7 @@ public class Avatar : Actor
         m_animator.Trigger(s_idJump);
         //AddForce in Phys2D has no velocity options :(
         Vector2 velocity = new Vector2(m_rigidbody.velocity.x, 0);
-
+        m_jumpAudio.Play();
         if(standingOn && standingOn.attachedRigidbody)
             velocity.y = standingOn.attachedRigidbody.velocity.y;
 
