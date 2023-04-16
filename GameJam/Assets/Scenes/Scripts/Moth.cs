@@ -73,6 +73,7 @@ public class Moth : Actor
         m_moveDuration = 0;
         gameObject.AddComponent<MaxLifetime>().TimeLeft = 152f;
         m_animator.SetValue(m_flying, true);
+        Controller.GetInstance().AddMoth();
     }
 
     private void FixedUpdate()
