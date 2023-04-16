@@ -448,6 +448,8 @@ public class Avatar : Actor
             
             protected override void OnEnter()
             {
+                m_contextWasPressed = false;
+                m_atLeastOneUpdate = false;
                 base.OnEnter();
                 actor.m_rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
                 actor.SetPhysMaterial(actor.m_walkMaterial);
@@ -486,14 +488,22 @@ public class Avatar : Actor
                 // }
             }
 
+            private bool m_contextWasPressed;
+            private bool m_atLeastOneUpdate;
+            
             void IUpdate.Update(float deltaTime)
             {
-        
+                // super hot hack bug fix, not being able to release from rope if outside the zone
+                if(actor.ContextInput.Value && !m_contextWasPressed && m_atLeastOneUpdate)
+                    TransitTo(parent.m_state_walking);
+
+                m_atLeastOneUpdate = true;
+                m_contextWasPressed = actor.ContextInput.Value;
             }
 
             void IThrowRope.ThrowRope(Vector2 worldPosition)
             {
-                TransitTo(parent.m_state_walking);
+                //TransitTo(parent.m_state_walking);
             }
         }
         

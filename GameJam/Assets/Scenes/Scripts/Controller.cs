@@ -72,6 +72,7 @@ public class Controller : SingletonBehaviour<Controller>
     
     void Awake()
     {
+        Time.timeScale = 1;
         // an ugly workaround to initialize the serialized property
         var avatar = Avatar;
         Avatar = null;
@@ -79,6 +80,12 @@ public class Controller : SingletonBehaviour<Controller>
         m_mothIndicator.transform.parent.gameObject.SetActive(false);
         
         m_pauseMenu.SetActive(false);
+    }
+
+    protected override void OnDestroyed()
+    {
+        Time.timeScale = 1;
+        base.OnDestroyed();
     }
     
     private void OnAvatarActionChanged((PlayerAction obj,Transform transform) tup)

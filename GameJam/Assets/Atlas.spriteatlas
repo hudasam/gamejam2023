@@ -86,6 +86,11 @@ SpriteAtlas:
     - {fileID: 21300000, guid: 19b8d9c42d736c5448424eb444498d0e, type: 3}
     - {fileID: 21300000, guid: 61cae2c3b45831640aeec067e86dc781, type: 3}
     - {fileID: 21300000, guid: 573193035c89ca64282df13c3596161e, type: 3}
+    - {fileID: 21300000, guid: f7540569b256b2045b154d62803cd34e, type: 3}
+    - {fileID: 2140443479, guid: ae2da7f105115f54fbef268df87a1ec4, type: 3}
+    - {fileID: 396999675, guid: 7febf162edc625d46bdaf337423d6c8b, type: 3}
+    - {fileID: 21300000, guid: d8c83ca8123cb7742a26c89968759d2c, type: 3}
+    - {fileID: 21300000, guid: b5bf46d5543e6e949811ac5dbb2295f0, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -93,6 +98,8 @@ SpriteAtlas:
   m_PackedSprites:
   - {fileID: 21300000, guid: 62f36641b71ae794aa60edf24aab4ddc, type: 3}
   - {fileID: 21300000, guid: ec4a7c51fece09b48adff31c366add7f, type: 3}
+  - {fileID: 2140443479, guid: ae2da7f105115f54fbef268df87a1ec4, type: 3}
+  - {fileID: 396999675, guid: 7febf162edc625d46bdaf337423d6c8b, type: 3}
   - {fileID: 21300000, guid: 3a41e7728350e0848ba1a90d825873c8, type: 3}
   - {fileID: 21300000, guid: 15a3ed925e9e8414b8bd5b6c96a2b737, type: 3}
   - {fileID: 1304068970, guid: bf8cb0a2ae1ef11449706fd21cd700d4, type: 3}
@@ -107,6 +114,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 2710f865ed3667a41bbda3bc04c51771, type: 3}
   - {fileID: 21300000, guid: f5d8067586cd94f4cac873e861c01c39, type: 3}
   - {fileID: 21300000, guid: bd4508c5fedcd1a4f9ad4c4a896e6813, type: 3}
+  - {fileID: 21300000, guid: b5bf46d5543e6e949811ac5dbb2295f0, type: 3}
   - {fileID: 1635943944, guid: f6baaa3634cfc5946b43972d08adc3d6, type: 3}
   - {fileID: 21300000, guid: 0017c946b3039c3459ed1669342ef2c4, type: 3}
   - {fileID: 21300000, guid: 2cd7bc1767a79054688fe834f21639b5, type: 3}
@@ -114,7 +122,9 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 94bcc43877134b64daf1e433a9a96298, type: 3}
   - {fileID: 21300000, guid: 46a9dc380fc65a648849942c2f1d81b2, type: 3}
   - {fileID: 21300000, guid: 8335b778c7112994e902103173afe501, type: 3}
+  - {fileID: 21300000, guid: d8c83ca8123cb7742a26c89968759d2c, type: 3}
   - {fileID: 21300000, guid: 5087fe3950b081d45b4f409e788fd602, type: 3}
+  - {fileID: 21300000, guid: f7540569b256b2045b154d62803cd34e, type: 3}
   - {fileID: 21300000, guid: f38b01b94efec8846b58f2b2006ee76f, type: 3}
   - {fileID: 21300000, guid: b2a5cac9e633ddc418d6e07de25e1ff1, type: 3}
   - {fileID: 21300000, guid: 60e9b39a852b2344799787d81087bdff, type: 3}
@@ -135,6 +145,8 @@ SpriteAtlas:
   m_PackedSpriteNamesToIndex:
   - 8
   - 3
+  - 5_0
+  - nitka_0
   - 3
   - au1
   - Button_0
@@ -149,6 +161,7 @@ SpriteAtlas:
   - 2
   - 1
   - chodza1
+  - useNeedle
   - Eye_0
   - 2
   - 5
@@ -156,7 +169,9 @@ SpriteAtlas:
   - 2
   - 3
   - 1
+  - Needle
   - 3
+  - 6
   - 7
   - 3
   - diera

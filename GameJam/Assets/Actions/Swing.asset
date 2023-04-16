@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a0454451e45a744eaf8c6d3dd3f70f2, type: 3}
   m_Name: Swing
   m_EditorClassIdentifier: 
-  m_description: Swing
+  m_description: throw rope
   m_type: 1
