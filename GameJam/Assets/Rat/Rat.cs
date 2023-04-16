@@ -96,9 +96,11 @@ public class Rat : Actor, INeedleDamageReceiver
             }
             else
             {
-                var request = m_actionRequests[avatar];
-                request.Dispose();
-                m_actionRequests.Remove(avatar);
+                if (m_actionRequests.TryGetValue(avatar, out var request))
+                {
+                    request.Dispose();
+                    m_actionRequests.Remove(avatar);
+                }
             }
 
         }

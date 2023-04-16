@@ -31,6 +31,7 @@ public class Avatar : Actor
     [SerializeField] private float m_jumpBoostAcceleration = 30f;
     [SerializeField] private float m_jumpBoostDuration = 0.1f;
     [SerializeField] private float m_wallJumpSpeed = 3;
+    [SerializeField] private AudioSource m_walkSound;
     
     [SerializeField] private float m_maxRopeDistance;
     [SerializeField] private Transform m_flip;
@@ -420,6 +421,7 @@ public class Avatar : Actor
             {
                 float playWalk = actor.IsGrounded() ? Mathf.Abs(actor.m_rigidbody.velocity.x) : 0f;
                 actor.m_animator.SetValue(s_idWalkSpeed, playWalk);
+                actor.m_walkSound.volume = Mathf.InverseLerp(0.5f, 1f,playWalk / actor.m_walkSpeed);
                 
                 if(Mathf.Abs(actor.NavigationInput) > 0.01f)
                 {
@@ -433,6 +435,7 @@ public class Avatar : Actor
             {
                 base.OnExit();
                 actor.m_animator.SetValue(s_idWalkSpeed, 0f);
+                actor.m_walkSound.volume = 0;
             }
         }
         

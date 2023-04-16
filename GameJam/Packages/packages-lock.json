@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.seweralideas.config": {
+      "version": "https://github.com/Pangamini/seweralideas-config.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "22396123c77ca8437bc8f914d14d221427eac9c9"
+    },
     "com.seweralideas.replayableeffects": {
       "version": "https://github.com/Pangamini/seweralideas-replayableeffects.git",
       "depth": 0,
