@@ -27,7 +27,7 @@ public class Rat : Actor, INeedleDamageReceiver
     private int sewAnim = Animator.StringToHash("Sewed");
 
     private AudioSource soundSrc;
-
+    private SpriteRenderer sprite;
     private Coroutine knockOutTimerCoroutine;
 
     [SerializeField] private int m_contextActionPrioriy;
@@ -35,6 +35,7 @@ public class Rat : Actor, INeedleDamageReceiver
 
     [SerializeField] private PlayerAction m_playerAction;
     private Dictionary<Avatar, MultiControl<(PlayerAction, Transform)>.Request> m_actionRequests = new();
+
 
     private bool knockedOut;
 
@@ -50,6 +51,8 @@ public class Rat : Actor, INeedleDamageReceiver
         m_animator = GetComponent<Animator>();
         active = true;
         soundSrc = GetComponent<AudioSource>();
+        sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
+        sprite.enabled = false;
     }
 
     private void OnAttackTriggerEnterExit(Actor actor, bool entered)
@@ -67,7 +70,13 @@ public class Rat : Actor, INeedleDamageReceiver
     }
     private void PlayPunchEffect() 
     {
-        m_animator.SetTrigger(attackAnim);     
+        if (m_animator.enabled == false)
+        {
+            sprite.enabled = true;
+            m_animator.enabled = true;
+        }
+        else
+            m_animator.SetTrigger(attackAnim);     
     }
     private void OnActionTriggerEnterExit(Actor actor, bool entered) 
     {
