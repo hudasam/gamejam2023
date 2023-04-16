@@ -26,6 +26,8 @@ public class Rat : Actor, INeedleDamageReceiver
     private int knockOutAnim = Animator.StringToHash("knockedOut");
     private int sewAnim = Animator.StringToHash("Sewed");
 
+    private AudioSource soundSrc;
+
     private Coroutine knockOutTimerCoroutine;
 
     [SerializeField] private int m_contextActionPrioriy;
@@ -47,6 +49,7 @@ public class Rat : Actor, INeedleDamageReceiver
         m_actionTrigger.ActorEnterExit += OnActionTriggerEnterExit;
         m_animator = GetComponent<Animator>();
         active = true;
+        soundSrc = GetComponent<AudioSource>();
     }
 
     private void OnAttackTriggerEnterExit(Actor actor, bool entered)
@@ -72,8 +75,10 @@ public class Rat : Actor, INeedleDamageReceiver
         if (actor is Avatar avatar)
         {
             //Item check TODO
+            if (!avatar.HasThread || !avatar.HasNeedle) return;
             if (entered)
             {
+                
                 if (!active) return;
                 if (m_playerAction == null)
                     Debug.LogError($"{nameof(m_playerAction)} is null", gameObject);
@@ -130,6 +135,7 @@ public class Rat : Actor, INeedleDamageReceiver
     {
         float t = ratKnockOutTime;
         knockedOut = true;
+        soundSrc.Play();
         m_animator.SetBool(knockOutAnim,true);
         while (t > 0)
         {

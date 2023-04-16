@@ -29,6 +29,7 @@ public class Swing : MonoBehaviour
         {
             if (entered)
             {
+                if (!avatar.HasThread) return;
                 highlight.enabled = true;
                 if (m_playerAction == null)
                     Debug.LogError($"{nameof(m_playerAction)} is null", gameObject);
