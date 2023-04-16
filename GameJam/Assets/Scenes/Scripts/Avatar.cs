@@ -593,7 +593,7 @@ public class Avatar : Actor
         
         normal.Normalize();
         m_rigidbody.velocity += normal * m_wallJumpSpeed;
-        
+        m_jumpAudio.Play();
         m_animator.Trigger(s_idJump);
     }
 
